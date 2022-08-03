@@ -1,0 +1,21 @@
+.filtro-mayor{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+}
+
+.filtro-tienda{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+}
+
+.filtro-tienda p{
+    display: inline;
+}
+
+.data-informativa{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+}
