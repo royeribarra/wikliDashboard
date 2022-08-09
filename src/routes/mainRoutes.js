@@ -41,7 +41,7 @@ const MainRoutes = () => {
               <TiendaAuth props={{ ...props }} Component={ LoginNew } />
               )
           }} /> */}
-          <Redirect from="/" to={`/login-tienda`} />
+          <Redirect from="/" to={`/login`} />
           <Redirect from="**" to={`/`} />
           <Redirect from="" to={`/`} />
         </Switch>

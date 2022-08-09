@@ -29,7 +29,7 @@ export function login(values) {
                             payload: false
                         });
     
-                        window.location.href = '/admin/usuarios';
+                        window.location.href = '/admin/pedidos';
                     },
                     (err)=> {
                         dispatch({

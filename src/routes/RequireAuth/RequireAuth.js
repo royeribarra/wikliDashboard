@@ -14,7 +14,7 @@ export const UserAuth = ({Component}) => {
     if (!localStorage.getItem("tknData")) {
         return <Component />
     }else if(localStorage.getItem("type") === '1'){
-        return <Redirect from="**" to={`/admin/usuarios`} />
+        return <Redirect from="**" to={`/admin/pedidos`} />
     }else if(localStorage.getItem("type") === '2'){
         return <Redirect from="**" to={`/tienda/devoluciones`} />
     }else if(localStorage.getItem("type") === '3'){

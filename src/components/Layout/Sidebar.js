@@ -1,4 +1,4 @@
-import logo200Image from 'assets/img/logo/logo_200.png';
+import logo200Image from 'assets/img/miniLogo.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-repo.png';
 import repo from 'assets/img/repo.svg';
 import SourceLink from 'components/SourceLink';
@@ -45,26 +45,13 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/devoluciones', name: 'Devoluciones', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/pedidos', name: 'Pedidos', exact: false, Icon: MdRadioButtonChecked },
   {
-    to: '/cambios-estandar',
-    name: 'Cambios Estándar',
+    to: '/productos',
+    name: 'Productos',
     exact: false,
     Icon: MdGroupWork,
-  },
-  { to: '/cambios-expres', name: 'Cambios Express', exact: false, Icon: MdChromeReaderMode },
-  { to: '/tu-repo', name: 'Tu Repo', exact: false, Icon: MdViewList },
-  {
-    to: '/cupones',
-    name: 'Cupones',
-    exact: false,
-    Icon: MdArrowDropDownCircle,
-  },
-  { to: '/procesos-finalizados', name: 'Procesos Finalizados', exact: false, Icon: MdStar },
-  { to: '/tiendas', name: 'Tiendas', exact: false, Icon: MdNotificationsActive },
-  { to: '/usuarios', name: 'Usuarios', exact: false, Icon: MdBrush },
-  { to: '/distritos', name: 'Distritos', exact: false, Icon: MdViewDay },
-  { to: '/facturacion', name: 'Facturación', exact: false, Icon: MdViewDay },
+  }
 ];
 
 const navContents = [

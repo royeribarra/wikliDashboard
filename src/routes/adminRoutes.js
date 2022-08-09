@@ -19,6 +19,9 @@ import cuponForm from "../modulos/admin/tuRepoCuponDescuento/cuponForm";
 import MainLayout from 'components/Layout/MainLayout';
 import PageSpinner from 'components/PageSpinner';
 import componentQueries from 'react-component-queries';
+import pedidos from '../modulos/admin/wiqli/pedidos';
+import ProductosWiqli from '../modulos/admin/producto/productos';
+import ProductoForm from "../modulos/admin/producto/productoForm";
 
 class AdminRoutes extends React.Component{
   render(){
@@ -46,7 +49,11 @@ class AdminRoutes extends React.Component{
             <Route exact path={`/admin/tu-repo`}                         component = { TuRepo } />
             <Route exact path={`/admin/cupones`}                         component = { tuRepoCuponDescuento } />
             <Route exact path={`/admin/cupon/crear`}                     component = { cuponForm } />
+            <Route exact path={`/admin/pedidos`}                         component = { pedidos } />
 
+            <Route exact path={`/admin/productos`}                       component = { ProductosWiqli } />
+            <Route exact path={"/admin/producto/crear"}                  component = { ProductoForm } />
+            <Route exact path={"/admin/productos/:productoId"}           component = { ProductoForm } />
             {/* <Redirect from="/"    to={`/admin/usuarios`} />
             <Redirect from=""     to={`/admin/usuarios`} />
             <Redirect from="**"   to={`/admin/usuarios`} /> */}
