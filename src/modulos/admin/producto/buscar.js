@@ -1,18 +1,30 @@
-import React from "react";
-import { Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Select } from "antd";
 import {
   Button,
   Card,
   CardBody,
   CardHeader
 } from 'reactstrap';
+import { CategoriaService } from "../../../servicios/categoriaService";
 
+const { Option } = Select;
 const Buscar = ({form, handleParentSearch}) => 
 {
+  const categoriaService = new CategoriaService("wiqli/categorias/todos");
+  const [categorias, setCategorias] = useState([]);
+
   const pasarInfo = (event) => {
     event.preventDefault();
     handleParentSearch();
   }
+
+  useEffect(() => {
+    categoriaService.getTodos().then(({data})=> {
+      setCategorias(data);
+    });
+  }, [])
+
   return (
     <Card className="filtro-producto" style={{ marginBottom: "15px" }}>
       <CardHeader>Buscar producto</CardHeader>
@@ -26,8 +38,8 @@ const Buscar = ({form, handleParentSearch}) =>
           <div className="row">
             <div className="col-md-6">
               <Form.Item
-                name="sku_producto"
-                label="SKU"
+                name="nombre"
+                label="Nombre"
               >
                 <Input className="input-padre" />
               </Form.Item>
@@ -35,10 +47,17 @@ const Buscar = ({form, handleParentSearch}) =>
             <div className="col-md-6">
               <Form.Item
                 tooltip="Modelo del producto"
-                name="sku_description"
-                label="Descripción"
+                name="categoria_id"
+                label="Categoría"
               >
-                <Input className="input-padre" />
+                <Select>
+                  <Option value="">Ninguno</Option>
+                  {
+                    categorias.map((categoria) => 
+                    <Option value={categoria.id}>{categoria.nombre}</Option>
+                    ) 
+                  }
+                </Select>
               </Form.Item>
             </div>
           </div>

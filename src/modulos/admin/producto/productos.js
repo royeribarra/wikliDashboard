@@ -47,6 +47,16 @@ const ProductosWiqli = ({ updateMigas }) => {
       }
     },
     {
+      title: "Categoría",
+      dataIndex: "categoria",
+      sorter: true,
+      render: (categoria) => {
+        return (
+          <p>{categoria.nombre}</p>
+        );
+      }
+    },
+    {
       title: "Unidad de medida",
       dataIndex: "unidad",
       render: (unidad) => {
@@ -135,7 +145,7 @@ const ProductosWiqli = ({ updateMigas }) => {
   const [rows, setRows] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 15,
+    pageSize: 10,
     total: 0,
   });
   const [loading] = useState(false);
@@ -146,6 +156,7 @@ const ProductosWiqli = ({ updateMigas }) => {
   };
 
   const fetchAll = (paginationTab = pagination) => {
+    console.log(paginationTab)
     const values = form.getFieldsValue();
     const searchObj = {
       ...values,

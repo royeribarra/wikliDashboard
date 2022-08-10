@@ -45,9 +45,6 @@ const Buscar = ({form, handleParentSearch}) =>
           name="nest-messages"
           form={form}
           layout="vertical"
-          initialValues={{
-            'fecha': [moment(), moment().add(7, 'd')]
-          }}
         >
           <div className="row">
             <div className="col-md-6">
@@ -58,11 +55,10 @@ const Buscar = ({form, handleParentSearch}) =>
               >
                 <RangePicker 
                   format='YYYY-MM-DD'
-                  defaultValue={[moment(), moment().add(7, 'd')]} 
                 />
               </Form.Item>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <Form.Item
                 className="formulario__label"
                 name="producto"
@@ -70,7 +66,7 @@ const Buscar = ({form, handleParentSearch}) =>
               >
                 <Input className="input-padre" />
               </Form.Item>
-            </div>
+            </div> */}
           </div>
           {' '}
           <Button onClick={pasarInfo}>Buscar</Button>
