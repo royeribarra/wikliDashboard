@@ -48,7 +48,7 @@ const Pedidos = ({ updateMigas }) => {
       dataIndex: "fecha_entrega",
       render: (fecha_entrega) => {
         return (
-          <p>{fecha_entrega.substring(0, 10)}</p>
+          <p>{fecha_entrega}</p>
         );
       }
     },

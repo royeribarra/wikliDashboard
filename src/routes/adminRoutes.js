@@ -3,19 +3,10 @@ import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
 // COMPONENTES DE VISTAS
 import Usuarios from "../modulos/admin/usuarios/usuarios";
 import Tiendas from "../modulos/admin/tiendas/tiendas";
-import CambiosEstandar from "../modulos/admin/cambiosEstandar/cambiosEstandar";
-import CambiosExpres from "../modulos/admin/cambiosExpres/cambiosExpres";
-
-import Devoluciones from "../modulos/admin/devoluciones/devoluciones";
-import ProcesosFinalizados from "../modulos/admin/procesosFinalizados/procesosFinalizados";
 // modulos GENERALES
 import UsuarioForm from "../modulos/admin/usuarios/usuarioForm";
 import TiendaForm from "../modulos/admin/tiendas/tiendaForm";
-import TuRepo from "../modulos/admin/tuRepo/tuRepo";
 import Distritos from "../modulos/admin/distritos/distritos";
-import Facturacion from "../modulos/admin/facturacion/facturacion";
-import tuRepoCuponDescuento from "../modulos/admin/tuRepoCuponDescuento/tuRepoCuponDescuento";
-import cuponForm from "../modulos/admin/tuRepoCuponDescuento/cuponForm";
 import MainLayout from 'components/Layout/MainLayout';
 import PageSpinner from 'components/PageSpinner';
 import componentQueries from 'react-component-queries';
@@ -35,20 +26,12 @@ class AdminRoutes extends React.Component{
 
             <Route exact path={`/admin/distritos`}                       component = { Distritos } />
 
-            <Route exact path={`/admin/cambios-estandar`}                component = { CambiosEstandar } />
-            <Route exact path={`/admin/cambios-expres`}                  component = { CambiosExpres } />
-            <Route exact path={`/admin/devoluciones`}                    component = { Devoluciones } />
-            <Route exact path={`/admin/procesos-finalizados`}            component = { ProcesosFinalizados } />
 
             <Route exact path={`/admin/usuarios`}                        component = { Usuarios } />
             <Route exact path={`/admin/usuario/crear`}                   component = { UsuarioForm } />
             <Route exact path={`/admin/usuarios/:usuarioId`}             component = { UsuarioForm } />
 
-            <Route exact path={`/admin/facturacion`}                     component = { Facturacion } />
 
-            <Route exact path={`/admin/tu-repo`}                         component = { TuRepo } />
-            <Route exact path={`/admin/cupones`}                         component = { tuRepoCuponDescuento } />
-            <Route exact path={`/admin/cupon/crear`}                     component = { cuponForm } />
             <Route exact path={`/admin/pedidos`}                         component = { pedidos } />
 
             <Route exact path={`/admin/productos`}                       component = { ProductosWiqli } />
