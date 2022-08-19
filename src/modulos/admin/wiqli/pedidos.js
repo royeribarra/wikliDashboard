@@ -101,7 +101,6 @@ const Pedidos = ({ updateMigas }) => {
       title: "Productos",
       dataIndex: "detalle",
       render: (detalle) => {
-        console.log(detalle)
         const columnas = [
           {
             title: "Producto",
@@ -191,11 +190,21 @@ const Pedidos = ({ updateMigas }) => {
   const fetchAll = (paginationTab = pagination) => {
     const values = form.getFieldsValue();
     console.log(values);
+    
+    var fieldsValue = values;
+    if(values.fecha){
+        var fieldsValue = {
+        ...values,
+        'fechaInicial': values['fecha'][0].format('YYYY-MM-DD'),
+        'fechaFinal': values['fecha'][1].format('YYYY-MM-DD')
+      };
+    }
     // const rangeValue = values['fecha'];
     // values['fecha'][0] = rangeValue[0].format('YYYY-MM-DD');
     // values['fecha'][1] = rangeValue[1].format('YYYY-MM-DD');
+    console.log(fieldsValue);
     const searchObj = {
-      ...values,
+      ...fieldsValue,
       page: paginationTab? paginationTab.current : 1
     }
 

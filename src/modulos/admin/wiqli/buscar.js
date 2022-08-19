@@ -117,8 +117,6 @@ const Buscar = ({form, handleParentSearch, exportExcel}) =>
               Ver Excel
             </a>
           }
-            
-            
           </Button>
         </Form>
       </CardBody>
