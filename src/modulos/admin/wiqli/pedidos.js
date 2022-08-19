@@ -209,9 +209,27 @@ const Pedidos = ({ updateMigas }) => {
     });
   };
 
+  const exportExcel = () => {
+    const values = form.getFieldsValue();
+    console.log(values)
+    if(values.fecha){
+      let fechaInicial = values.fecha[0].format('YYYY-MM-DD');
+      let fechaFinal = values.fecha[1].format('YYYY-MM-DD');
+      pedidoService.getExcel(fechaInicial, fechaFinal).then(({data}) => {
+        console.log(data);
+      })
+    }
+    if(!values.fecha){
+      pedidoService.getExcelAll().then(({data}) => {
+        console.log(data);
+      })
+    }
+    
+  }
+
   return (
     <Page title="Pedidos">
-      <Buscar form={form} handleParentSearch={fetchAll}/>
+      <Buscar form={form} handleParentSearch={fetchAll} exportExcel={exportExcel} />
       <Card>
         <CardHeader>
           Lista de Pedidos

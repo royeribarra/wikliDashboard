@@ -9,4 +9,12 @@ export class PedidoService extends MainService {
   verPdf(id) {
     return axios.get(`${this.url}/ver-pdf/${id}`, this.options);
   }
+
+  getExcel(fechaInicial, fechaFinal){
+    return axios.get(`${this.url}/exportar-excel/${fechaInicial}/${fechaFinal}`, this.options);
+  }
+
+  getExcelAll(){
+    return axios.get(`${this.url}/exportar-excel/todos`, this.options);
+  }
 }
