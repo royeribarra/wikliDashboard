@@ -7,7 +7,6 @@ import { toastr } from "react-redux-toastr";
 import { ProductoService } from "../../../servicios/productoService";
 import { UnidadService } from "../../../servicios/unidadService";
 import { CategoriaService } from "../../../servicios/categoriaService";
-import { getProfiles, getSedes } from "../../../redux/actions/userActions";
 import { updateMigas } from "../../../redux/actions/routeTiendaActions";
 import Page from '../../../components/Page';
 import {
@@ -28,7 +27,7 @@ const validateMessages = {
   },
 };
 
-const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) => {
+const ProductoForm = ({ updateMigas }) => {
   const [form] = Form.useForm();
   const productoService = new ProductoService("wiqli/producto");
   const unidadService = new UnidadService("wiqli/unidades/todos");
@@ -47,7 +46,7 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
       ({ data }) => {
         data = { ...data, id };
         form.setFieldsValue(data);
-        setActImage(data.dimensiones);
+        setActImage(data.imagen);
       },
       (err) => {
       }
@@ -55,7 +54,7 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
   };
 
   function goToList() {
-    history.push("/tienda/productos");
+    history.push("/admin/productos");
   }
 
   const onFinish = (values) => {
@@ -70,16 +69,19 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
     archivos.forEach(file => {
       formData.append('files[]', file.originFileObj);
     });
-    if(params.id){
-      productoService.updateProduct(formData, params.id, header).then(
+    if(params.productoId){
+      productoService.updateProduct(formData, params.productoId, header).then(
         ({data}) => {
-          toastr.success(data.message)
-          goToList();
+          if(data.state){
+            toastr.success(data.message)
+            goToList();
+          }
+          
         },
         () => {}
       );
     }else{
-      productoService.storeProduct(formData, params.id, header).then(
+      productoService.storeProduct(formData, params.productoId, header).then(
         ({data}) => {
           toastr.success(data.message)
           goToList();
@@ -112,14 +114,6 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
 
   useEffect(() => {
     updateMigas(url) 
-    
-    if (!profiles.length) {
-      getProfiles();
-    }
-
-    if (!sedes.length) {
-      getSedes();
-    }
 
     if (params.productoId) {
       getProductoInfo(params.productoId);
@@ -172,7 +166,7 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
                 <div className="col-md-6">
                   <Form.Item
                     className="formulario__label"
-                    name={"categoria"}
+                    name={"categoria_id"}
                     label="Categoría"
                     rules={[{ required: true }]}
                   >
@@ -212,7 +206,6 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
                     className="formulario__label"
                     name={"stock"}
                     label="Stock"
-                    rules={[{ required: true }]}
                   >
                     <Input className="input-padre" />
                   </Form.Item>
@@ -220,7 +213,7 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
                 <div className="col-md-6">
                   <Form.Item
                     className="formulario__label"
-                    name={"unidad"}
+                    name={"unidad_id"}
                     label="Unidad"
                   >
                     <Select>
@@ -236,7 +229,7 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
               <div>
                 { actImage ? (
                     <img
-                        src={"http://localhost/tiendas/"+actImage}
+                        src={"http://127.0.0.1:8000/wiqli/"+actImage}
                         style={{ maxHeight: "150px" }}
                     />
                 ) : (
@@ -254,12 +247,12 @@ const ProductoForm = ({ profiles, sedes, getProfiles, getSedes, updateMigas }) =
                   </input>
                 </Form.Item> */}
                 <Form.Item
-                  name="imagen_boleta"
+                  name="imagen_producto"
                   label="Foto del producto (jpg, png o jepg)"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                 >
-                  <Upload name="logo" action="/upload.do" listType="picture">
+                  <Upload name="logo" action="/upload.do" listType="picture" accept="image/*">
                     <Button icon={<UploadOutlined />}>Subir foto</Button>
                   </Upload>
                 </Form.Item>
@@ -285,12 +278,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateMigas:  (values) => {
       dispatch(updateMigas(values));
-    },
-    getProfiles:  (values) => {
-      dispatch(getProfiles(values));
-    },
-    getSedes:     (values) => {
-      dispatch(getSedes(values));
     },
   }
 };
