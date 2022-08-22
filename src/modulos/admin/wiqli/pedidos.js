@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Form, Space, Popover, Button } from "antd";
 import { RepoOperadorLogisticoService } from "../../../servicios/admin/repoOperadorLogisticoService";
@@ -96,6 +96,17 @@ const Pedidos = ({ updateMigas }) => {
           <p>{cliente? cliente.direccion + '-' + cliente.referencia : ''}</p>
         );
       }
+    },
+    {
+      title: "Editar",
+      dataIndex: "id",
+      render: (id) => {
+        return (
+          <NavLink className="toggle__item" to={`/admin/pedido/${id}`}>
+            <Button color="warning">Editar</Button>
+          </NavLink>
+        );
+      },
     },
     {
       title: "Productos",

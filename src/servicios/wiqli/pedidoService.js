@@ -17,4 +17,8 @@ export class PedidoService extends MainService {
   getExcelAll(){
     return axios.get(`${this.url}/exportar-excel/todos`, this.options);
   }
+
+  updateDetalle(data, id){
+    return axios.post(`${this.url}/${id}`, data, this.options);
+  }
 }

@@ -13,6 +13,7 @@ import componentQueries from 'react-component-queries';
 import pedidos from '../modulos/admin/wiqli/pedidos';
 import ProductosWiqli from '../modulos/admin/producto/productos';
 import ProductoForm from "../modulos/admin/producto/productoForm";
+import pedidoDetalle from '../modulos/admin/wiqli/pedidoDetalle';
 
 class AdminRoutes extends React.Component{
   render(){
@@ -33,6 +34,7 @@ class AdminRoutes extends React.Component{
 
 
             <Route exact path={`/admin/pedidos`}                         component = { pedidos } />
+            <Route exact path={`/admin/pedido/:pedidoId`}                component = { pedidoDetalle } />
 
             <Route exact path={`/admin/productos`}                       component = { ProductosWiqli } />
             <Route exact path={"/admin/producto/crear"}                  component = { ProductoForm } />
