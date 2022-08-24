@@ -24,124 +24,6 @@ const ProductosWiqli = ({ updateMigas }) => {
   const btnUploadFileRecorded = useRef(null);
   const [showDelModal, setShowDelModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
-
-  const beforeUploadRecorded = (file) => {
-    filesRecorded.push(file);
-    setFilesRecorded(filesRecorded);
-  };
-
-  const onRemoveRecorded = (file) => {
-    const newFileList = filesRecorded.filter(fileRec => fileRec.uid !== file.uid);
-    setFilesRecorded(newFileList);
-  };
-
-  let columns = [
-    {
-      title: "Producto",
-      dataIndex: "nombre",
-      sorter: true,
-      render: (nombre) => {
-        return (
-          <p>{nombre}</p>
-        );
-      }
-    },
-    {
-      title: "Categoría",
-      dataIndex: "categoria",
-      sorter: true,
-      render: (categoria) => {
-        return (
-          <p>{categoria.nombre}</p>
-        );
-      }
-    },
-    {
-      title: "Unidad de medida",
-      dataIndex: "unidad",
-      render: (unidad) => {
-        return (
-          <p>{unidad.nombre}</p>
-        );
-      }
-    },
-    {
-      title: "Cantidad mínima",
-      dataIndex: "cantidad_minima",
-      render: (cantidad_minima) => {
-        return (
-          <p>{cantidad_minima}</p>
-        );
-      }
-    },
-    {
-      title: "Imagen url",
-      dataIndex: "imagen",
-      render: (imagen) => {
-        return (
-          <p>{imagen}</p>
-        );
-      }
-    },
-    {
-      title: "Subir imagen",
-      render: (image) => {
-        return (
-          <Button>Ver</Button>
-        );
-      }
-    },
-    {
-      title: "Precio unitario",
-      dataIndex: "precio_unitario",
-      width: 150,
-      render: (precio_unitario) => {
-        return (
-          <p>{precio_unitario}</p>
-        );
-      }
-    },
-    {
-      title: "Descripción",
-      dataIndex: "nombre",
-      render: (nombre) => {
-        return (
-          <p>{nombre}</p>
-        );
-      }
-    },
-    {
-      title: "Stock",
-      dataIndex: "stock",
-      render: (stock) => {
-        return (
-          <p>{stock}</p>
-        );
-      }
-    },
-    {
-      title: "Editar",
-      dataIndex: "id",
-      render: (id) => {
-        return (
-          <NavLink className="toggle__item" to={`/admin/productos/${id}`}>
-            <ButtonReact color="warning">Editar</ButtonReact>
-          </NavLink>
-        );
-      },
-    },
-    {
-      title: "Eliminar",
-      dataIndex: "id",
-      fixed: "right",
-      render: (id, row) => {
-        return (
-          <ButtonReact color="danger" onClick={() => deleteRecord(id, row)}>Eliminar</ButtonReact>
-        );
-      },
-    }
-  ];
-
   const [rows, setRows] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -171,6 +53,25 @@ const ProductosWiqli = ({ updateMigas }) => {
       });
       setRows(data.data);
     });
+  };
+
+  const handleParentSearch = () => {
+    let newPagination = {
+      current: 1,
+      pageSize: 10,
+      total: 0,
+    }
+    fetchAll(newPagination);
+  }
+
+  const beforeUploadRecorded = (file) => {
+    filesRecorded.push(file);
+    setFilesRecorded(filesRecorded);
+  };
+
+  const onRemoveRecorded = (file) => {
+    const newFileList = filesRecorded.filter(fileRec => fileRec.uid !== file.uid);
+    setFilesRecorded(newFileList);
   };
 
   const uploadCsv = () => {
@@ -205,9 +106,116 @@ const ProductosWiqli = ({ updateMigas }) => {
     }
   }, []);
 
+  let columns = [
+    {
+      title: "Producto",
+      dataIndex: "producto_nombre",
+      sorter: true,
+      render: (producto_nombre) => {
+        return (
+          <p>{producto_nombre}</p>
+        );
+      }
+    },
+    {
+      title: "Categoría",
+      dataIndex: "categoria_nombre",
+      sorter: true,
+      render: (categoria_nombre) => {
+        return (
+          <p>{categoria_nombre}</p>
+        );
+      }
+    },
+    {
+      title: "Unidad de medida",
+      dataIndex: "unidad_medida_nombre",
+      render: (unidad_medida_nombre) => {
+        return (
+          <p>{unidad_medida_nombre}</p>
+        );
+      }
+    },
+    {
+      title: "Cantidad mínima",
+      dataIndex: "producto_cantidad_minima",
+      render: (producto_cantidad_minima) => {
+        return (
+          <p>{producto_cantidad_minima}</p>
+        );
+      }
+    },
+    {
+      title: "Imagen url",
+      dataIndex: "producto_imagen",
+      render: (producto_imagen) => {
+        return (
+          <p>{producto_imagen}</p>
+        );
+      }
+    },
+    {
+      title: "Subir imagen",
+      render: (image) => {
+        return (
+          <Button>Ver</Button>
+        );
+      }
+    },
+    {
+      title: "Precio unitario",
+      dataIndex: "producto_precio_unitario",
+      width: 150,
+      render: (producto_precio_unitario) => {
+        return (
+          <p>{producto_precio_unitario}</p>
+        );
+      }
+    },
+    {
+      title: "Descripción",
+      dataIndex: "producto_nombre",
+      render: (producto_nombre) => {
+        return (
+          <p>{producto_nombre}</p>
+        );
+      }
+    },
+    {
+      title: "Stock",
+      dataIndex: "producto_stock",
+      render: (producto_stock) => {
+        return (
+          <p>{producto_stock}</p>
+        );
+      }
+    },
+    {
+      title: "Editar",
+      dataIndex: "producto_id",
+      render: (producto_id) => {
+        return (
+          <NavLink className="toggle__item" to={`/admin/productos/${producto_id}`}>
+            <ButtonReact color="warning">Editar</ButtonReact>
+          </NavLink>
+        );
+      },
+    },
+    {
+      title: "Eliminar",
+      dataIndex: "producto_id",
+      fixed: "right",
+      render: (producto_id, row) => {
+        return (
+          <ButtonReact color="danger" onClick={() => deleteRecord(producto_id, row)}>Eliminar</ButtonReact>
+        );
+      },
+    }
+  ];
+
   return (
     <Page title="Productos">
-      <Buscar form={form} handleParentSearch={fetchAll}/>
+      <Buscar form={form} handleParentSearch={handleParentSearch}/>
       <Card style={{ marginBottom: "15px" }}>
         <CardHeader>
           Subir Csv
