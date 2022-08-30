@@ -229,7 +229,7 @@ const ProductoForm = ({ updateMigas }) => {
               <div>
                 { actImage ? (
                     <img
-                        src={"http://127.0.0.1:8000/wiqli/"+actImage}
+                        src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+actImage}
                         style={{ maxHeight: "150px" }}
                     />
                 ) : (
