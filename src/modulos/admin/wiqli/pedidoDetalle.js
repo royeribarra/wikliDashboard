@@ -58,6 +58,7 @@ const PedidoDetalle = () => {
   const edit = (record) => {
     console.log(record)
     form.setFieldsValue({
+      id: record.id,
       producto: record.producto,
       nombre_desc: record.nombre_desc,
       cantidad: record.cantidad,
@@ -76,7 +77,9 @@ const PedidoDetalle = () => {
   const save = async (detalle) => {
     try {
       const row = await form.validateFields();
-      pedidoService.updateDetalle(detalle, detalle.id).then(({data}) => {
+      console.log(detalle)
+      console.log(row)
+      pedidoService.updateDetalle(row, detalle.id).then(({data}) => {
         console.log(data);
       });
       const newData = [...data];

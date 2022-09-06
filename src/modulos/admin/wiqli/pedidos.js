@@ -53,6 +53,15 @@ const Pedidos = ({ updateMigas }) => {
       }
     },
     {
+      title: "Fecha de pedido",
+      dataIndex: "created_at",
+      render: (created_at) => {
+        return (
+          <p>{created_at.substring(0, 10)}</p>
+        );
+      }
+    },
+    {
       title: "Cliente",
       dataIndex: "cliente",
       render: (cliente) => {
