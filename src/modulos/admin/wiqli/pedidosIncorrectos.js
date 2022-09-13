@@ -18,7 +18,7 @@ import {
 import { PedidoService } from "../../../servicios/wiqli/pedidoService";
 
 const Pedidos = ({ updateMigas }) => {
-  const pedidoService = new PedidoService("wiqli/pedidos");
+  const pedidoService = new PedidoService("wiqli/pedidos-incorrectos");
   const logisticoService = new RepoOperadorLogisticoService("repo/operadores-logisticos");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
@@ -44,6 +44,15 @@ const Pedidos = ({ updateMigas }) => {
         );
       }
     },
+    {
+        title: "Motivo de error",
+        dataIndex: "motivoDesactivo",
+        render: (motivoDesactivo) => {
+          return (
+            <p>{motivoDesactivo}</p>
+          );
+        }
+      },
     {
       title: "Fecha de entrega",
       dataIndex: "fecha_entrega",
@@ -261,7 +270,7 @@ const Pedidos = ({ updateMigas }) => {
       page: paginationTab? paginationTab.current : 1
     }
 
-    pedidoService.getAll(searchObj).then(({ data }) => {
+    pedidoService.getAllIncorrectos(searchObj).then(({ data }) => {
       setPagination({
         ...paginationTab,
         current: data.current,

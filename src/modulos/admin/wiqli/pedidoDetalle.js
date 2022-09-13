@@ -1,9 +1,9 @@
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { PedidoService } from '../../../servicios/wiqli/pedidoService';
 import { NavLink, useRouteMatch,  useHistory, useParams } from "react-router-dom";
 import "./pedidoDetalle.css";
-import { CardBody, Card } from 'reactstrap';
+import { CardBody, Card, Button as ButtonReactStrap } from 'reactstrap';
 import Page from '../../../components/Page';
 
 const originData = [];
@@ -100,6 +100,19 @@ const PedidoDetalle = () => {
     }
   };
 
+  const changeStatusPedido = (id) => {
+    pedidoService.updateStateDetalle(id).then(() => {
+      pedidoService.get(pedidoId).then(
+        ({ data }) => {
+          console.log(data)
+          setData(data);
+        },
+          (err) => {
+        }
+        );
+    });
+  }
+
   const columns = [
     {
       title: 'Producto',
@@ -157,6 +170,38 @@ const PedidoDetalle = () => {
         );
       },
     },
+    {
+      title: "Estado",
+      dataIndex: "",
+      render: (row) => {
+        const { id, status } = row;
+        return (
+          <Fragment>
+            {status > 0 ? (
+              <ButtonReactStrap
+                color="success"
+                className="boton boton--verde boton-estado text-right"
+                onClick={() => {
+                  changeStatusPedido(id);
+                }}
+              >
+                Activo
+              </ButtonReactStrap>
+            ) : (
+                <ButtonReactStrap
+                  color="danger"
+                  className="boton boton--plomo boton-estado text-right"
+                  onClick={() => {
+                    changeStatusPedido(id);
+                  }}
+                >
+                  Inactivo
+                </ButtonReactStrap>
+              )}
+          </Fragment>
+        );
+      },
+    }
   ];
 
   const mergedColumns = columns.map((col) => {

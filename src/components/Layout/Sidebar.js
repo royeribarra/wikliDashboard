@@ -45,10 +45,15 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/pedidos', name: 'Pedidos', exact: false, Icon: MdRadioButtonChecked },
   {
     to: '/productos',
     name: 'Productos',
+    exact: false,
+    Icon: MdGroupWork,
+  },
+  {
+    to: '/precios-externos',
+    name: 'Precios Externos',
     exact: false,
     Icon: MdGroupWork,
   }
@@ -60,10 +65,10 @@ const navContents = [
 ];
 
 const pageContents = [
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
+  { to: '/pedidos-activos', name: 'Pedidos válidos', exact: false, Icon: MdGroupWork },
   {
-    to: '/login-modal',
-    name: 'login modal',
+    to: '/pedidos-incorrectos',
+    name: 'Pedidos incorrectos',
     exact: false,
     Icon: MdViewCarousel,
   },
@@ -114,6 +119,45 @@ class Sidebar extends React.Component {
           <Nav vertical>
             <Collapse isOpen={this.state.isOpenComponents}>
               {navComponents.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={`/admin${to}`}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Pages')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdPages className={bem.e('nav-item-icon')} />
+                  <span className="">Pedidos</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenPages
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenPages}>
+              {pageContents.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}

@@ -13,9 +13,11 @@ export class ProductoService extends MainService {
   storeProduct(data, header) {
     return axios.post(`${this.url}`, data, this.options);
   }
+
   updateProduct(data, id) {
     return axios.post(`${this.url}/${id}`, data, this.options);
   }
+  
   deleteProduct(data, id) {
     return axios.post(`${this.url}/delete/${id}`, data, this.options);
   }

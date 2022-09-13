@@ -83,8 +83,10 @@ const ProductoForm = ({ updateMigas }) => {
     }else{
       productoService.storeProduct(formData, params.productoId, header).then(
         ({data}) => {
-          toastr.success(data.message)
-          goToList();
+          if(data.state){
+            toastr.success(data.message)
+            goToList();
+          }
         },
         () => {}
       );
@@ -184,7 +186,6 @@ const ProductoForm = ({ updateMigas }) => {
                     className="formulario__label"
                     name={"imagen"}
                     label="Imagen"
-                    rules={[{ required: true }]}
                   >
                     <Input className="input-padre" />
                   </Form.Item>
@@ -215,6 +216,7 @@ const ProductoForm = ({ updateMigas }) => {
                     className="formulario__label"
                     name={"unidad_id"}
                     label="Unidad"
+                    rules={[{ required: true }]}
                   >
                     <Select>
                       {
