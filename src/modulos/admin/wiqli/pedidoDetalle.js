@@ -1,10 +1,16 @@
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
+import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button, Select } from 'antd';
 import React, { useEffect, useState, Fragment } from 'react';
 import { PedidoService } from '../../../servicios/wiqli/pedidoService';
 import { NavLink, useRouteMatch,  useHistory, useParams } from "react-router-dom";
 import "./pedidoDetalle.css";
-import { CardBody, Card, Button as ButtonReactStrap } from 'reactstrap';
+import { CardBody, Card, Button as ButtonReactStrap, CardHeader, Modal, ModalBody,
+  ModalFooter,
+  ModalHeader, } from 'reactstrap';
 import Page from '../../../components/Page';
+import 'antd/dist/antd.css';
+import axios from "axios";
+import InfoPedido from './infoPedido';
+const { Option } = Select;
 
 const originData = [];
 
@@ -46,12 +52,85 @@ const EditableCell = ({
   );
 };
 
+const fetch = (value, callback) => {
+  let timeout;
+  if (timeout) {
+    clearTimeout(timeout);
+    timeout = null;
+  }
+  let currentValue = value;
+  const consulta = () => {
+    axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/obtener-x-producto?nombre=${currentValue}`)
+      .then((response) => {
+        if (currentValue === value) {
+          const { data } = response;
+          callback(data);
+        }
+      });
+  };
+  timeout = setTimeout(consulta, 300);
+};
+
+const SearchInput = ({determinarProceso, placeholder, style}) => {
+  const [data, setData] = useState([]);
+  const [value, setValue] = useState();
+
+  const handleSearch = (newValue) => {
+    if (newValue) {
+      fetch(newValue, setData);
+    } else {
+      setData([]);
+    }
+  };
+
+  const handleChange = (newValue, data) => {
+    setValue(newValue);
+    determinarProceso(newValue, data);
+  };
+
+  const options = data.map((d) => <Option key={d.id} value={d.id} precio={d.precio_unitario}>{d.nombre}</Option>);
+  return (
+    <Select
+      className="selectLanding-ant"
+      showSearch
+      value={value}
+      placeholder={placeholder}
+      style={style}
+      defaultActiveFirstOption={false}
+      showArrow={false}
+      filterOption={false}
+      onSearch={handleSearch}
+      onChange={handleChange}
+      notFoundContent={null}
+    >
+      {options}
+    </Select>
+  );
+};
+
 const PedidoDetalle = () => {
   const pedidoService = new PedidoService("wiqli/pedido");
   const { pedidoId } = useParams();
   const [form] = Form.useForm();
+  const [formProducto] = Form.useForm();
   const [data, setData] = useState([]);
+  const [dataPedido, setDataPedido] = useState();
+  const [idProducto, setIdProducto] = useState(0);
+  const [existeProducto, setExisteProducto] = useState(true);
   const [editingKey, setEditingKey] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const isEditing = (record) => record.id === editingKey;
 
@@ -221,21 +300,154 @@ const PedidoDetalle = () => {
     };
   });
 
-  useEffect(() => {
+  const obtenerPedidoId = () => {
     pedidoService.get(pedidoId).then(
-    ({ data }) => {
-      console.log(data)
-      setData(data);
-    },
-      (err) => {
-    }
+      ({ data }) => {
+        console.log(data)
+        setData(data);
+      },
+        (err) => {
+      }
     );
+  }
+
+  const obtenerInformacionPedidoId = () => {
+    pedidoService.getInformacionPedido(pedidoId).then(
+      ({ data }) => {
+        console.log(data)
+        setDataPedido(data);
+      },
+        (err) => {
+      }
+    );
+  }
+
+  useEffect(() => {
+    obtenerPedidoId();
+    obtenerInformacionPedidoId();
   }, [])
+
+  const onFinish = (values) => {
+    existeProducto ? values.producto = '' : values.producto = 'Otro producto';
+    pedidoService.agregarProductoDetalle(pedidoId, idProducto, values).then(({data}) => {
+      console.log(data);
+      if(data.state){
+        handleCancel();
+        obtenerPedidoId();
+      }
+    });
+  };
+
+  const obtenerProducto = (e, data) => {
+    setIdProducto(data.key);
+    console.log(data);
+    if(data.children !== "Otro producto"){
+      formProducto.setFieldsValue({
+        precio_unitario: data.precio
+      });
+      setExisteProducto(true);
+    }else if(data.children === "Otro producto"){
+      setExisteProducto(false);
+    }
+  }
 
   return (
     <Page title="Información general">
+      {
+        dataPedido && <InfoPedido data={dataPedido} />
+      }
+      
       <Card>
         <CardBody>
+          <ButtonReactStrap color="primary" onClick={showModal} style={{ marginBottom: "20px" }}>
+            Agregar producto
+          </ButtonReactStrap>
+          <Modal
+            isOpen={isModalOpen}
+            toggle={showModal}
+          >
+            <ModalHeader toggle={handleCancel}>Agregar producto</ModalHeader>
+            <ModalBody>
+            <Form
+              form={formProducto}
+              name="basic"
+              onFinish={onFinish}
+              autoComplete="off"
+              layout="vertical"
+            >
+              <Form.Item 
+                name="producto_id" 
+                label="Buscar producto"
+                className="selector-tienda"
+              >
+                <SearchInput
+                  placeholder="Escribe el producto"
+                  determinarProceso={obtenerProducto}
+                />
+              </Form.Item>
+              {
+                !existeProducto &&
+                <>
+                  <Form.Item
+                    label="Nombre del producto"
+                    name="nombre_desc"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor ingresa un nombre!',
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item 
+                    label="Cantidad"
+                    name="cantidad_desc"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor ingresa una cantidad!',
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </> 
+              }
+              {
+                existeProducto &&
+                <Form.Item 
+                  label="Cantidad"
+                  name="cantidad"
+                >
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item>
+              }
+              
+              <Form.Item 
+                label="Precio unitario"
+                name="precio_unitario"
+              >
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+              <ModalFooter>
+                <Form.Item
+                >
+                  <Button type="primary" htmlType="submit">
+                  Guardar
+                  </Button>
+                </Form.Item>
+                <Form.Item
+                >
+                  <Button type="primary" danger onClick={handleCancel}>
+                    Cancelar
+                  </Button>
+                </Form.Item>
+              </ModalFooter>
+            </Form>
+            </ModalBody>
+            
+          </Modal>
           <Form form={form} component={false}>
             <Table
               components={{

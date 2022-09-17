@@ -155,12 +155,15 @@ const ProductosWiqli = ({ updateMigas }) => {
       }
     },
     {
-      title: "Subir imagen",
-      render: (image) => {
+      title: "Estadística",
+      dataIndex: "producto_id",
+      render: (producto_id) => {
         return (
-          <Button>Ver</Button>
+          <NavLink className="toggle__item" to={`/admin/productos/estadistica/${producto_id}`}>
+            <ButtonReact color="warning">Estadistica</ButtonReact>
+          </NavLink>
         );
-      }
+      },
     },
     {
       title: "Precio unitario",

@@ -10,6 +10,11 @@ export class PedidoService extends MainService {
     return axios.get(`${this.url}/ver-pdf/${id}`, this.options);
   }
 
+  getInformacionPedido(id)
+  {
+    return axios.get(`${this.url}/obtener-informacion/${id}`, this.options);
+  }
+
   getAllIncorrectos(){
     return axios.get(`${this.url}/todos`, this.options);
   }
@@ -34,5 +39,10 @@ export class PedidoService extends MainService {
   updateStateDetalle(id)
   {
     return axios.get(`${this.url}/detalle/actualizar-estado/${id}`, this.options);
+  }
+
+  agregarProductoDetalle(pedidoId, productoId, data)
+  {
+    return axios.post(`${this.url}/detalle/agregar-producto/${pedidoId}/${productoId}`, data, this.options);
   }
 }
