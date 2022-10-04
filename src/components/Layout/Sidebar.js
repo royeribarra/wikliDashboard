@@ -56,7 +56,13 @@ const navComponents = [
     name: 'Precios Externos',
     exact: false,
     Icon: MdGroupWork,
-  }
+  },
+  {
+    to: '/scraping/productos-externos',
+    name: 'Productos scraping',
+    exact: false,
+    Icon: MdViewCarousel,
+  },
 ];
 
 const navContents = [

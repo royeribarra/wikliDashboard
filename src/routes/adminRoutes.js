@@ -15,6 +15,8 @@ import ProductosWiqli from '../modulos/admin/producto/productos';
 import ProductoForm from "../modulos/admin/producto/productoForm";
 import pedidoDetalle from '../modulos/admin/wiqli/pedidoDetalle';
 import pedidosIncorrectos from '../modulos/admin/wiqli/pedidosIncorrectos';
+import productoExterno from '../modulos/admin/productoExterno/productoExterno';
+import productoExternoForm from '../modulos/admin/productoExterno/productoExternoForm';
 
 class AdminRoutes extends React.Component{
   render(){
@@ -44,6 +46,9 @@ class AdminRoutes extends React.Component{
 
             <Route exact path={"/admin/precios-externos"}                component = { ProductoForm } />
             <Route exact path={"/admin/precio-externo/:productoId"}      component = { ProductoForm } />
+
+            <Route exact path={"/admin/scraping/productos-externos"}      component = { productoExterno } />
+            <Route exact path={"/admin/scraping/producto-externo/:productoId"}      component = { productoExternoForm } />
             {/* <Redirect from="/"    to={`/admin/usuarios`} />
             <Redirect from=""     to={`/admin/usuarios`} />
             <Redirect from="**"   to={`/admin/usuarios`} /> */}
