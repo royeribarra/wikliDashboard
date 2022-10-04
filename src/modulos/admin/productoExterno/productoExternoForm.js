@@ -168,8 +168,28 @@ const ProductoExternoForm = ({ updateMigas }) => {
                 <div className="col-md-6">
                   <Form.Item
                     className="formulario__label"
+                    name={"multiplicador_vea"}
+                    label="Multiplicador Vea"
+                    rules={[{ required: true }]}
+                  >
+                    <Input className="input-padre" />
+                  </Form.Item>
+                </div>
+                <div className="col-md-6">
+                  <Form.Item
+                    className="formulario__label"
                     name={"url_tottus"}
                     label="Link Tottus"
+                    rules={[{ required: true }]}
+                  >
+                    <Input className="input-padre" />
+                  </Form.Item>
+                </div>
+                <div className="col-md-6">
+                  <Form.Item
+                    className="formulario__label"
+                    name={"multiplicador_tottus"}
+                    label="Multiplicador Tottus"
                     rules={[{ required: true }]}
                   >
                     <Input className="input-padre" />
@@ -185,74 +205,16 @@ const ProductoExternoForm = ({ updateMigas }) => {
                     <Input className="input-padre" />
                   </Form.Item>
                 </div>
-              </div>
-              <div className="row">
                 <div className="col-md-6">
                   <Form.Item
                     className="formulario__label"
-                    name={"precio_unitario"}
-                    label="Precio unitario"
+                    name={"multiplicador_wong"}
+                    label="Multiplicador Wong"
                     rules={[{ required: true }]}
                   >
                     <Input className="input-padre" />
                   </Form.Item>
                 </div>
-                <div className="col-md-6">
-                  <Form.Item
-                    className="formulario__label"
-                    name={"stock"}
-                    label="Stock"
-                  >
-                    <Input className="input-padre" />
-                  </Form.Item>
-                </div>
-                <div className="col-md-6">
-                  <Form.Item
-                    className="formulario__label"
-                    name={"unidad_id"}
-                    label="Unidad"
-                    rules={[{ required: true }]}
-                  >
-                    <Select>
-                      {
-                       unidades.map((unidad) => 
-                        <Option value={unidad.id}>{unidad.nombre}</Option>
-                       ) 
-                      }
-                    </Select>
-                  </Form.Item>
-                </div>
-              </div>
-              <div>
-                { actImage ? (
-                    <img
-                        src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+actImage}
-                        style={{ maxHeight: "150px" }}
-                    />
-                ) : (
-                    ""
-                )}
-                {/* <Form.Item 
-                  className="formulario__label"
-                  label="Imagen"
-                >
-                  <input 
-                    type="file"
-                    onChange={onFileChange}
-                    accept="image/png, image/jpeg"
-                  >
-                  </input>
-                </Form.Item> */}
-                <Form.Item
-                  name="imagen_producto"
-                  label="Foto del producto (jpg, png o jepg)"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                >
-                  <Upload name="logo" action="/upload.do" listType="picture" accept="image/*">
-                    <Button icon={<UploadOutlined />}>Subir foto</Button>
-                  </Upload>
-                </Form.Item>
               </div>
             </div>
             <Form.Item>
