@@ -54,7 +54,7 @@ const ProductoExternoForm = ({ updateMigas }) => {
   };
 
   function goToList() {
-    history.push("/admin/productos");
+    history.push("/admin/scraping/productos-externos");
   }
 
   const onFinish = (values) => {
