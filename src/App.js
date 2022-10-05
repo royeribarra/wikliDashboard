@@ -11,6 +11,7 @@ import './styles/reduction.scss';
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import ReduxToastr from "react-redux-toastr";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
