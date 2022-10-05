@@ -221,7 +221,7 @@ const ProductoExternoForm = ({ updateMigas }) => {
               <Button type="primary" htmlType="submit" style={{ margin: "10px" }}>
                 Guardar
               </Button>
-              <NavLink to="/tienda/productos">
+              <NavLink to="/admin/scraping/productos-externos">
                 <Button type="danger" style={{ margin: "10px" }}>Cancelar</Button>
               </NavLink>
             </Form.Item>
