@@ -32,6 +32,7 @@ const ProductoExternoForm = ({ updateMigas }) => {
   const productoService = new ProductoService("wiqli/producto-scrapeado");
   const unidadService = new UnidadService("wiqli/unidades/todos");
   const categoriaService = new CategoriaService("wiqli/categorias/todos");
+  const productoWiqliService = new ProductoService("wiqli/productos");
   //const { id } = useParams();
   const params = useParams();
   const history = useHistory();
@@ -40,6 +41,7 @@ const ProductoExternoForm = ({ updateMigas }) => {
   const [archivos, setArchivos] = useState([]);
   const [unidades, setUnidades] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [productosWiqli, setProductosWiqli] = useState([]);
 
   const getProductoInfo = (id) => {
     productoService.get(id).then(
@@ -123,6 +125,9 @@ const ProductoExternoForm = ({ updateMigas }) => {
   }, [] );
 
   useEffect(() => {
+    productoWiqliService.todosProductosParaScraping().then(({data})=> {
+      setProductosWiqli(data);
+    });
     unidadService.getTodos().then(({data})=> {
       setUnidades(data);
     });
@@ -153,6 +158,22 @@ const ProductoExternoForm = ({ updateMigas }) => {
                     rules={[{ required: true }]}
                   >
                     <Input className="input-padre" />
+                  </Form.Item>
+                </div>
+                <div className="col-md-6">
+                  <Form.Item
+                    className="formulario__label"
+                    name={"wiqli_producto_id"}
+                    label="Producto asociado"
+                    rules={[{ required: true }]}
+                  >
+                    <Select>
+                      {
+                       productosWiqli.map((producto) => 
+                        <Option value={producto.id}>{producto.nombre}</Option>
+                       ) 
+                      }
+                    </Select>
                   </Form.Item>
                 </div>
                 <div className="col-md-6">

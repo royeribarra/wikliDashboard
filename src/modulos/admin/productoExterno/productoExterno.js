@@ -190,7 +190,7 @@ const ProductoExterno = ({ updateMigas }) => {
             <div className="col-md-6">
               <NavLink
                 exact={false}
-                to={`producto/crear`}
+                to={`productos-externos/crear`}
                 className="item__link boton  boton--transparent-azul "
               >
                 <ButtonReact color="primary" className="mr-1">

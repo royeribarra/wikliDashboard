@@ -30,4 +30,9 @@ export class ProductoService extends MainService {
     
     return axios.post(`${this.url}/disminuir-inventario/${id}`, data, this.options);
   }
+
+  todosProductosParaScraping() 
+  {
+    return axios.get(`${this.url}/relacion-scraping`, this.options);
+  }
 }

@@ -48,6 +48,7 @@ class AdminRoutes extends React.Component{
             <Route exact path={"/admin/precio-externo/:productoId"}      component = { ProductoForm } />
 
             <Route exact path={"/admin/scraping/productos-externos"}      component = { productoExterno } />
+            <Route exact path={"/admin/scraping/productos-externos/crear"}      component = { productoExternoForm } />
             <Route exact path={"/admin/scraping/producto-externo/:productoId"}      component = { productoExternoForm } />
             {/* <Redirect from="/"    to={`/admin/usuarios`} />
             <Redirect from=""     to={`/admin/usuarios`} />
