@@ -46,6 +46,12 @@ const sidebarBackground = {
 
 const navComponents = [
   {
+    to: '/configuracion',
+    name: 'Configuración',
+    exact: false,
+    Icon: MdGroupWork,
+  },
+  {
     to: '/productos',
     name: 'Productos',
     exact: false,

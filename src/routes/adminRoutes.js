@@ -17,6 +17,7 @@ import pedidoDetalle from '../modulos/admin/wiqli/pedidoDetalle';
 import pedidosIncorrectos from '../modulos/admin/wiqli/pedidosIncorrectos';
 import productoExterno from '../modulos/admin/productoExterno/productoExterno';
 import productoExternoForm from '../modulos/admin/productoExterno/productoExternoForm';
+import configuracion from '../modulos/admin/configuracion/configuracion';
 
 class AdminRoutes extends React.Component{
   render(){
@@ -24,17 +25,17 @@ class AdminRoutes extends React.Component{
       <Switch>
         <MainLayout breakpoint={this.props.breakpoint}>
           <React.Suspense fallback={<PageSpinner />}>
+            <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
+
             <Route exact path={`/admin/tiendas`}                         component = { Tiendas } />
             <Route exact path={`/admin/tienda/crear`}                    component = { TiendaForm } />
             <Route exact path={`/admin/tiendas/:id`}                     component = { TiendaForm } />
 
             <Route exact path={`/admin/distritos`}                       component = { Distritos } />
 
-
             <Route exact path={`/admin/usuarios`}                        component = { Usuarios } />
             <Route exact path={`/admin/usuario/crear`}                   component = { UsuarioForm } />
             <Route exact path={`/admin/usuarios/:usuarioId`}             component = { UsuarioForm } />
-
 
             <Route exact path={`/admin/pedidos-activos`}                 component = { pedidos } />
             <Route exact path={`/admin/pedidos-incorrectos`}             component = { pedidosIncorrectos } />

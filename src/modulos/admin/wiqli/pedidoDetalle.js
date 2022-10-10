@@ -12,45 +12,6 @@ import axios from "axios";
 import InfoPedido from './infoPedido';
 const { Option } = Select;
 
-const originData = [];
-
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
-
-const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
 
 const fetch = (value, callback) => {
   let timeout;
@@ -108,6 +69,35 @@ const SearchInput = ({determinarProceso, placeholder, style}) => {
   );
 };
 
+const EditableCell = ({
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  index,
+  children,
+  ...restProps
+}) => {
+  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  );
+};
+
 const PedidoDetalle = () => {
   const pedidoService = new PedidoService("wiqli/pedido");
   const { pedidoId } = useParams();
@@ -135,7 +125,6 @@ const PedidoDetalle = () => {
   const isEditing = (record) => record.id === editingKey;
 
   const edit = (record) => {
-    console.log(record)
     form.setFieldsValue({
       id: record.id,
       producto: record.producto,
@@ -156,10 +145,9 @@ const PedidoDetalle = () => {
   const save = async (detalle) => {
     try {
       const row = await form.validateFields();
-      console.log(detalle)
-      console.log(row)
       pedidoService.updateDetalle(row, detalle.id).then(({data}) => {
-        console.log(data);
+        obtenerInformacionPedidoId();
+        obtenerPedidoId();
       });
       const newData = [...data];
       const index = newData.findIndex((item) => detalle.id === item.id);
@@ -183,7 +171,7 @@ const PedidoDetalle = () => {
     pedidoService.updateStateDetalle(id).then(() => {
       pedidoService.get(pedidoId).then(
         ({ data }) => {
-          console.log(data)
+          obtenerInformacionPedidoId();
           setData(data);
         },
           (err) => {
@@ -303,7 +291,6 @@ const PedidoDetalle = () => {
   const obtenerPedidoId = () => {
     pedidoService.get(pedidoId).then(
       ({ data }) => {
-        console.log(data)
         setData(data);
       },
         (err) => {
@@ -314,7 +301,6 @@ const PedidoDetalle = () => {
   const obtenerInformacionPedidoId = () => {
     pedidoService.getInformacionPedido(pedidoId).then(
       ({ data }) => {
-        console.log(data)
         setDataPedido(data);
       },
         (err) => {
@@ -330,7 +316,6 @@ const PedidoDetalle = () => {
   const onFinish = (values) => {
     existeProducto ? values.producto = '' : values.producto = 'Otro producto';
     pedidoService.agregarProductoDetalle(pedidoId, idProducto, values).then(({data}) => {
-      console.log(data);
       if(data.state){
         handleCancel();
         obtenerPedidoId();
@@ -340,7 +325,6 @@ const PedidoDetalle = () => {
 
   const obtenerProducto = (e, data) => {
     setIdProducto(data.key);
-    console.log(data);
     if(data.children !== "Otro producto"){
       formProducto.setFieldsValue({
         precio_unitario: data.precio
