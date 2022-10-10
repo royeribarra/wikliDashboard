@@ -10,6 +10,12 @@ import Page from '../../../components/Page';
 import 'antd/dist/antd.css';
 import axios from "axios";
 import InfoPedido from './infoPedido';
+import {
+  EditOutlined,
+  SaveTwoTone,
+  CloseCircleTwoTone
+} from '@ant-design/icons';
+
 const { Option } = Select;
 
 
@@ -217,17 +223,17 @@ const PedidoDetalle = () => {
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
-          <span>
+          <span style={{ fontSize: "20px" }}>
             <Typography.Link
               onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
             >
-              Guardar
+              <SaveTwoTone />
             </Typography.Link>
             <Popconfirm title="¿Cancelar operación?" onConfirm={cancel}>
-              <a>Cancelar</a>
+              <CloseCircleTwoTone twoToneColor="#eb2f96" />
             </Popconfirm>
           </span>
         ) : (
