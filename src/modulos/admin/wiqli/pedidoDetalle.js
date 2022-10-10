@@ -15,6 +15,7 @@ import {
   SaveTwoTone,
   CloseCircleTwoTone
 } from '@ant-design/icons';
+import { toastr } from 'react-redux-toastr';
 
 const { Option } = Select;
 
@@ -154,6 +155,7 @@ const PedidoDetalle = () => {
       pedidoService.updateDetalle(row, detalle.id).then(({data}) => {
         obtenerInformacionPedidoId();
         obtenerPedidoId();
+        toastr.success(data.message)
       });
       const newData = [...data];
       const index = newData.findIndex((item) => detalle.id === item.id);
@@ -174,7 +176,8 @@ const PedidoDetalle = () => {
   };
 
   const changeStatusPedido = (id) => {
-    pedidoService.updateStateDetalle(id).then(() => {
+    pedidoService.updateStateDetalle(id).then(({data}) => {
+      toastr.success(data.message);
       pedidoService.get(pedidoId).then(
         ({ data }) => {
           obtenerInformacionPedidoId();
