@@ -157,6 +157,17 @@ const ProductoExterno = ({ updateMigas }) => {
       }
     },
     {
+      title: "Estadística",
+      dataIndex: "id",
+      render: (id) => {
+        return (
+          <NavLink className="toggle__item" to={`/admin/scraping/producto-externo/estadistica/${id}`}>
+            <ButtonReact color="primary">Estadística</ButtonReact>
+          </NavLink>
+        );
+      },
+    },
+    {
       title: "Editar",
       dataIndex: "id",
       render: (id) => {
