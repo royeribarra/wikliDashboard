@@ -4,10 +4,14 @@ import { connect } from "react-redux";
 import { Table, Form, Upload, Button, Image } from "antd";
 import { EstadisticaService } from "../../../servicios/estadisticaService";
 import { updateMigas } from "../../../redux/actions/routeActions";
+import { Line } from 'react-chartjs-2';
 import Buscar from "./buscar";
 import { STORAGE_URL } from "../../../config/constants";
 import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
+import { randomNum } from 'utils/demos';
+import { getColor } from 'utils/colors';
+import { Row, Col } from "reactstrap";
 import {
   Card,
   CardBody,
@@ -15,6 +19,7 @@ import {
   Button as ButtonReact
 } from 'reactstrap';
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const EstadisticaProducto = ({ updateMigas }) => {
   const estadisticaService = new EstadisticaService("wiqli/producto-externo/estadistica");
   const { url, path } = useRouteMatch();
@@ -25,12 +30,71 @@ const EstadisticaProducto = ({ updateMigas }) => {
   const params = useParams();
   const [activeRow, setActiveRow] = useState({});
   const [rows, setRows] = useState([]);
+  const [dataVea, setDataVea] = useState([]);
+  const [dataTottus, setDataTottus] = useState([]);
+  const [dataWong, setDataWong] = useState([]);
   const [loading] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
   });
+
+  const genLineData = (moreData = {}, moreData2 = {}) => {
+    return {
+      labels: MONTHS,
+      datasets: [
+        {
+          label: 'Vea',
+          backgroundColor: getColor('primary'),
+          borderColor: getColor('primary'),
+          borderWidth: 1,
+          data: [
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+          ],
+          ...moreData,
+        },
+        {
+          label: 'Tottus',
+          backgroundColor: getColor('secondary'),
+          borderColor: getColor('secondary'),
+          borderWidth: 1,
+          data: [
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+          ],
+          ...moreData2,
+        },
+        {
+          label: 'Wong',
+          backgroundColor: getColor('success'),
+          borderColor: getColor('success'),
+          borderWidth: 1,
+          data: [
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+            randomNum(),
+          ],
+          ...moreData2,
+        },
+      ],
+    };
+  };
 
   const getProductoInfo = (id) => {
     estadisticaService.get(id).then(
@@ -42,6 +106,30 @@ const EstadisticaProducto = ({ updateMigas }) => {
       }
     );
   };
+
+  const getProductoInfoScraping = (id) => {
+    estadisticaService.getPreciosScraping(id).then(({data})=> {
+      console.log(data)
+      if(data.state)
+      {
+        const vea = [];
+        const tottus = [];
+        const wong = [];
+        data.vea.forEach(el => {
+          vea.push(el.precio_unitario_online);
+        });
+        data.tottus.forEach(el => {
+          tottus.push(el.precio_unitario_online);
+        });
+        data.wong.forEach(el => {
+          wong.push(el.precio_unitario_online);
+        });
+        setDataVea(vea);
+        setDataTottus(tottus);
+        setDataWong(wong);
+      }
+    });
+  }
 
   const fetchAll = (paginationTab = pagination) => {
     const values = form.getFieldsValue();
@@ -79,6 +167,7 @@ const EstadisticaProducto = ({ updateMigas }) => {
 
     if (params.productoId) {
       getProductoInfo(params.productoId);
+      getProductoInfoScraping(params.productoId);
     }
   }, []);
 
@@ -145,7 +234,9 @@ const EstadisticaProducto = ({ updateMigas }) => {
       dataIndex: "id",
       render: (id, row) => {
         return (
-          <p>{ parseFloat(row.precio_wiqli - (row.precio_externo * row.multiplicador)).toFixed(2)}</p>
+          <p style={{ color: `${row.precio_wiqli - (row.precio_externo * row.multiplicador) > 0 ? 'red' : 'black' }` }}>
+            { parseFloat(row.precio_wiqli - (row.precio_externo * row.multiplicador)).toFixed(2)}
+          </p>
         );
       }
     },
@@ -162,6 +253,16 @@ const EstadisticaProducto = ({ updateMigas }) => {
 
   return (
     <Page title="Precios">
+      <Row>
+        <Col xl={6} lg={12} md={12}>
+          <Card>
+            <CardHeader>Variación de producto</CardHeader>
+            <CardBody>
+              <Line data={genLineData({ fill: false }, { fill: false })} />
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
       
       <Card>
         <CardHeader>Lista de precios</CardHeader>

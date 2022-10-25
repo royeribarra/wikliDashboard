@@ -9,4 +9,9 @@ export class EstadisticaService extends MainService {
   uploadCsv(object) {
     return axios.post(`${this.url}/upload-csv`, object, this.options);
   }
+
+  getPreciosScraping(id)
+  {
+    return axios.get(`${this.url}/precios/scraping/tiendas/${id}`, this.options);
+  }
 }

@@ -39,7 +39,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <MainRoutes />
-          <ReduxToastr
+        <ReduxToastr
           className="toastr__modificar"
           timeOut={4000}
           newestOnTop={false}

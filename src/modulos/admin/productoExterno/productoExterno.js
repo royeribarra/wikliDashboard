@@ -193,7 +193,6 @@ const ProductoExterno = ({ updateMigas }) => {
   return (
     <Page title="Productos Externos Scraping">
       <Buscar form={form} handleParentSearch={handleParentSearch}/>
-      
       <Card>
         <CardHeader>Lista de productos</CardHeader>
         <CardBody>
