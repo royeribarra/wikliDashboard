@@ -35,4 +35,9 @@ export class ProductoService extends MainService {
   {
     return axios.get(`${this.url}/relacion-scraping`, this.options);
   }
+
+  updateState(id)
+  {
+    return axios.get(`${this.url}/actualizar-estado/${id}`, this.options);
+  }
 }

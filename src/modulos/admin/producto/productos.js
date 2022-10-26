@@ -98,6 +98,12 @@ const ProductosWiqli = ({ updateMigas }) => {
     setShowDelModal(true);
   };
 
+  const changeStatusProduct = (productoId) => {
+    productoService.updateState(productoId).then(({data}) => {
+      fetchAll(pagination.current);
+    });
+  }
+
   useEffect(() => {
     updateMigas(url);
 
@@ -192,6 +198,38 @@ const ProductosWiqli = ({ updateMigas }) => {
           <p>{producto_stock}</p>
         );
       }
+    },
+    {
+      title: "Estado",
+      dataIndex: "",
+      render: (row) => {
+        const { producto_id, producto_estado } = row;
+        return (
+          <>
+            {producto_estado ? (
+              <ButtonReact
+                color="success"
+                className="boton boton--verde boton-estado text-right"
+                onClick={() => {
+                  changeStatusProduct(producto_id);
+                }}
+              >
+                Activo
+              </ButtonReact>
+            ) : (
+                <ButtonReact
+                  color="danger"
+                  className="boton boton--plomo boton-estado text-right"
+                  onClick={() => {
+                    changeStatusProduct(producto_id);
+                  }}
+                >
+                  Inactivo
+                </ButtonReact>
+              )}
+          </>
+        );
+      },
     },
     {
       title: "Editar",

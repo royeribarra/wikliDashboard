@@ -103,14 +103,24 @@ const ProductoExterno = ({ updateMigas }) => {
       }
     },
     {
-      title: "Link Vea",
-      dataIndex: "url_vea",
-      render: (url_vea) => {
+      title: "Precio wiqli",
+      dataIndex: "producto_wiqli",
+      sorter: true,
+      render: (producto_wiqli) => {
         return (
-          <p>{url_vea}</p>
+          <p>{producto_wiqli? producto_wiqli.precio_unitario : 'No existe el producto.'}</p>
         );
       }
     },
+    // {
+    //   title: "Link Vea",
+    //   dataIndex: "url_vea",
+    //   render: (url_vea) => {
+    //     return (
+    //       <p>{url_vea}</p>
+    //     );
+    //   }
+    // },
     {
       title: "Multiplicador Vea",
       dataIndex: "multiplicador_vea",
@@ -121,14 +131,38 @@ const ProductoExterno = ({ updateMigas }) => {
       }
     },
     {
-      title: "Link Tottus",
-      dataIndex: "url_tottus",
-      render: (url_tottus) => {
+      title: "Precio Vea",
+      dataIndex: "precio_vea",
+      render: (precio_vea) => {
         return (
-          <p>{url_tottus}</p>
+          <p>{precio_vea}</p>
         );
       }
     },
+    {
+      title: "Diferencia Vea",
+      dataIndex: "producto_wiqli",
+      render: (producto_wiqli, row) => {
+        return (
+          <>
+            { (producto_wiqli && row.precio_vea) &&
+              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea) > 0 ? 'red' : 'black' }` }}>
+                { parseFloat(producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea)).toFixed(2)}
+              </p>
+            }
+          </>
+        );
+      }
+    },
+    // {
+    //   title: "Link Tottus",
+    //   dataIndex: "url_tottus",
+    //   render: (url_tottus) => {
+    //     return (
+    //       <p>{url_tottus}</p>
+    //     );
+    //   }
+    // },
     {
       title: "Multiplicador Tottus",
       dataIndex: "multiplicador_tottus",
@@ -139,20 +173,69 @@ const ProductoExterno = ({ updateMigas }) => {
       }
     },
     {
-      title: "Link Wong",
-      dataIndex: "url_wong",
-      render: (url_wong) => {
+      title: "Precio Tottus",
+      dataIndex: "precio_tottus",
+      render: (precio_tottus) => {
         return (
-          <p>{url_wong}</p>
+          <p>{precio_tottus}</p>
         );
       }
     },
+    {
+      title: "Diferencia Tottus",
+      dataIndex: "producto_wiqli",
+      render: (producto_wiqli, row) => {
+        return (
+          <>
+            { (producto_wiqli && row.precio_vea) &&
+              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus) > 0 ? 'red' : 'black' }` }}>
+                { parseFloat(producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus)).toFixed(2)}
+              </p>
+            }
+          </>
+        );
+      }
+    },
+    // {
+    //   title: "Link Wong",
+    //   dataIndex: "url_wong",
+    //   render: (url_wong) => {
+    //     return (
+    //       <p>{url_wong}</p>
+    //     );
+    //   }
+    // },
     {
       title: "Multiplicador Wong",
       dataIndex: "multiplicador_wong",
       render: (multiplicador_wong) => {
         return (
           <p>{multiplicador_wong}</p>
+        );
+      }
+    },
+    {
+      title: "Precio Wong",
+      dataIndex: "precio_wong",
+      render: (precio_wong) => {
+        return (
+          <p>{precio_wong}</p>
+        );
+      }
+    },
+    {
+      title: "Diferencia Wong",
+      dataIndex: "producto_wiqli",
+      render: (producto_wiqli, row) => {
+        return (
+          <>
+            { (producto_wiqli && row.precio_vea) ? 
+              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong) > 0 ? 'red' : 'black' }` }}>
+                { parseFloat(producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong)).toFixed(2)}
+              </p> :
+              <p style={{ color: "red" }}>No se cuenta con información</p>
+            }
+          </>
         );
       }
     },
