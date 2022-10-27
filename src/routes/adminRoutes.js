@@ -19,6 +19,8 @@ import productoExterno from '../modulos/admin/productoExterno/productoExterno';
 import productoExternoForm from '../modulos/admin/productoExterno/productoExternoForm';
 import configuracion from '../modulos/admin/configuracion/configuracion';
 import estadisticaProducto from '../modulos/admin/productoExterno/estadisticaProducto';
+import cuponDescuento from '../modulos/admin/cuponDescuento/cuponDescuento';
+import cuponForm from '../modulos/admin/cuponDescuento/cuponForm';
 
 class AdminRoutes extends React.Component{
   render(){
@@ -53,6 +55,10 @@ class AdminRoutes extends React.Component{
             <Route exact path={"/admin/scraping/productos-externos/crear"}      component = { productoExternoForm } />
             <Route exact path={"/admin/scraping/producto-externo/:productoId"}      component = { productoExternoForm } />
             <Route exact path={"/admin/scraping/producto-externo/estadistica/:productoId"}      component = { estadisticaProducto } />
+
+            <Route exact path={"/admin/cupones-descuento"}                component = { cuponDescuento } />
+            <Route exact path={`/admin/cupones-descuento/crear`}          component = { cuponForm } />
+            <Route exact path={"/admin/cupon-descuento/:cuponId"}         component = { cuponForm } />
             {/* <Redirect from="/"    to={`/admin/usuarios`} />
             <Redirect from=""     to={`/admin/usuarios`} />
             <Redirect from="**"   to={`/admin/usuarios`} /> */}

@@ -69,6 +69,12 @@ const navComponents = [
     exact: false,
     Icon: MdViewCarousel,
   },
+  {
+    to: '/cupones-descuento',
+    name: 'Cupones de descuento',
+    exact: false,
+    Icon: MdViewCarousel,
+  },
 ];
 
 const navContents = [
