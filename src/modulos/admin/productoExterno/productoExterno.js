@@ -135,9 +135,10 @@ const ProductoExterno = ({ updateMigas }) => {
       title: "Precio Vea",
       dataIndex: "precio_vea",
       onCell: (text, record) => {
-        const checkCase = 'red';
+        const fondo = 'red';
+        const letra = 'white';
         return {
-          ['style']: {background: checkCase},
+          ['style']: {background: fondo, color: letra},
           className: 'example-class-in-td',
         };
       },
