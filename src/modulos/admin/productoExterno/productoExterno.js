@@ -145,10 +145,11 @@ const ProductoExterno = ({ updateMigas }) => {
       render: (producto_wiqli, row) => {
         return (
           <>
-            { (producto_wiqli && row.precio_vea) &&
+            { (producto_wiqli && row.precio_vea) ?
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea) > 0 ? 'red' : 'black' }` }}>
                 { parseFloat(producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea)).toFixed(2)}
-              </p>
+              </p> :
+              <p style={{ color: "red" }}>No se cuenta con información</p>
             }
           </>
         );
@@ -187,10 +188,11 @@ const ProductoExterno = ({ updateMigas }) => {
       render: (producto_wiqli, row) => {
         return (
           <>
-            { (producto_wiqli && row.precio_vea) &&
+            { (producto_wiqli && row.precio_tottus) ?
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus) > 0 ? 'red' : 'black' }` }}>
                 { parseFloat(producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus)).toFixed(2)}
-              </p>
+              </p> :
+              <p style={{ color: "red" }}>No se cuenta con información</p>
             }
           </>
         );
@@ -229,7 +231,7 @@ const ProductoExterno = ({ updateMigas }) => {
       render: (producto_wiqli, row) => {
         return (
           <>
-            { (producto_wiqli && row.precio_vea) ? 
+            { (producto_wiqli && row.precio_wong) ? 
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong) > 0 ? 'red' : 'black' }` }}>
                 { parseFloat(producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong)).toFixed(2)}
               </p> :
