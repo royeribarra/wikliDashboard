@@ -106,6 +106,7 @@ const ProductoExterno = ({ updateMigas }) => {
       title: "Precio wiqli",
       dataIndex: "producto_wiqli",
       sorter: true,
+      fixed: "left",
       render: (producto_wiqli) => {
         return (
           <p>{producto_wiqli? producto_wiqli.precio_unitario : 'No existe el producto.'}</p>
@@ -133,6 +134,13 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Precio Vea",
       dataIndex: "precio_vea",
+      onCell: (text, record) => {
+        const checkCase = 'red';
+        return {
+          ['style']: {background: checkCase},
+          className: 'example-class-in-td',
+        };
+      },
       render: (precio_vea) => {
         return (
           <p>{precio_vea}</p>
@@ -147,7 +155,7 @@ const ProductoExterno = ({ updateMigas }) => {
           <>
             { (producto_wiqli && row.precio_vea) ?
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea) > 0 ? 'red' : 'black' }` }}>
-                { parseFloat(producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea)).toFixed(2)}
+                { parseFloat(producto_wiqli.precio_unitario - row.precio_vea).toFixed(2)}
               </p> :
               <p style={{ color: "red" }}>No se cuenta con información</p>
             }
@@ -190,7 +198,7 @@ const ProductoExterno = ({ updateMigas }) => {
           <>
             { (producto_wiqli && row.precio_tottus) ?
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus) > 0 ? 'red' : 'black' }` }}>
-                { parseFloat(producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus)).toFixed(2)}
+                { parseFloat(producto_wiqli.precio_unitario - row.precio_tottus).toFixed(2)}
               </p> :
               <p style={{ color: "red" }}>No se cuenta con información</p>
             }
@@ -233,7 +241,7 @@ const ProductoExterno = ({ updateMigas }) => {
           <>
             { (producto_wiqli && row.precio_wong) ? 
               <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong) > 0 ? 'red' : 'black' }` }}>
-                { parseFloat(producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong)).toFixed(2)}
+                { parseFloat(producto_wiqli.precio_unitario - row.precio_wong).toFixed(2)}
               </p> :
               <p style={{ color: "red" }}>No se cuenta con información</p>
             }
@@ -266,7 +274,6 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Eliminar",
       dataIndex: "id",
-      fixed: "right",
       render: (id, row) => {
         return (
           <ButtonReact color="danger" onClick={() => deleteRecord(id, row)}>Eliminar</ButtonReact>
