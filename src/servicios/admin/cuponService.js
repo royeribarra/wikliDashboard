@@ -10,4 +10,9 @@ export class CuponService extends MainService {
   {
     return axios.get(`${this.url}/envio-correos/codigo/referente`, this.options);
   }
+
+  updateState(id)
+  {
+    return axios.get(`${this.url}/actualizar-estado/${id}`, this.options);
+  }
 }
