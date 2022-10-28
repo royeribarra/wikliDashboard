@@ -74,6 +74,7 @@ const CuponDescuento = ({ updateMigas }) => {
   const changeStatusCupon = (cuponId) => {
     cuponService.updateState(cuponId).then(({data}) => {
       fetchAll(pagination.current);
+      toastr.success("Estado actualizado");
     });
   }
 
