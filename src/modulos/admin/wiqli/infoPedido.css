@@ -1,0 +1,17 @@
+.informacion-pedido{
+    margin-bottom: "15px";
+}
+
+.tituloTexto{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.textoInformacion{
+    text-transform: none;
+    font-weight: normal;
+}
+
+.boton-descargar-pdf a{
+    display: flex !important;
+    align-items: center;
+}

@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Form, Space, Popover, Button } from "antd";
-import { RepoOperadorLogisticoService } from "../../../servicios/admin/repoOperadorLogisticoService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
@@ -19,7 +18,6 @@ import { PedidoService } from "../../../servicios/wiqli/pedidoService";
 
 const Pedidos = ({ updateMigas }) => {
   const pedidoService = new PedidoService("wiqli/pedidos");
-  const logisticoService = new RepoOperadorLogisticoService("repo/operadores-logisticos");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
   const [carriers, setCarriers] = useState([]);

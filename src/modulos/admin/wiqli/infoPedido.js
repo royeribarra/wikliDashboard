@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Select, DatePicker } from "antd";
-import { TiendaService } from "../../../servicios/tiendaService";
+import "./infoPedido.css";
+import {
+  FileExcelFilled
+} from '@ant-design/icons';
+
 import {
   Button,
   Card,
@@ -12,13 +15,53 @@ const InfoPedido = ({data}) =>
   console.log(data);
 
   return (
-    <Card className="filtro-gestiones">
+    <Card className="informacion-pedido">
       <CardHeader>Información Pedido</CardHeader>
       <CardBody>
-        <p>Cliente: {data.cliente.nombres + ' ' + data.cliente.apellidos}</p>
-        <p>Número: {data.cliente.telefono}</p>
-        <p>Fecha entrega: {data.fecha_entrega}</p>
-        <p>Total: {data.total}</p>
+        <div className="row">
+          <div className="col-md-6">
+            <p className="tituloTexto">Cliente: 
+              <span className="textoInformacion">{' ' + data.cliente.nombres + ' ' + data.cliente.apellidos}</span>
+            </p>
+            <p className="tituloTexto">Número: 
+              <span className="textoInformacion">{' ' + data.cliente.telefono}</span>
+            </p>
+            <p className="tituloTexto">Fecha entrega: 
+              <span className="textoInformacion">{' ' + data.fecha_entrega}</span>
+            </p>
+          </div>
+          <div className="col-md-6">
+            <p className="tituloTexto">Total Productos: 
+              <span className="textoInformacion">{' ' + data.totalProductos}</span>
+            </p>
+            <p className="tituloTexto">Delivery: 
+              <span className="textoInformacion">{' ' + data.costo_delivery}</span>
+            </p>
+            {
+              data.descuento && 
+              <p className="tituloTexto">Descuento: 
+                <span className="textoInformacion">{' ' + data.descuento}</span>
+              </p>
+            }
+            
+            <p className="tituloTexto">Total: 
+              <span className="textoInformacion">{' ' + data.total}</span>
+            </p>
+          </div>
+        </div>
+        <p className="tituloTexto">Observación: 
+          <span className="textoInformacion">{' ' + data.observacion}</span>
+        </p>
+        {
+          data.motivoDesactivo && 
+          <p className="tituloTexto">Motivo anulación: 
+            <span className="textoInformacion">{' ' + data.motivoDesactivo}</span>
+          </p>
+        }
+        
+        <Button outline color="success" className="boton-descargar-pdf">
+          <a href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/ver-pdf/${data.id}`} target = "_blank">Descargar PDF<FileExcelFilled /></a>
+        </Button>
       </CardBody>
     </Card>
   );

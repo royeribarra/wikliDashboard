@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { RequireAuth, UserAuth, TiendaAuth  } from './RequireAuth/RequireAuth';
 import Admin from '../pages/admin/admin';
-import Tienda from '../pages/tienda/tienda';
 import Login from "../pages/login";
 import LoginTienda from "../pages/loginTienda";
 import GAListener from '../components/GAListener';
@@ -19,11 +18,6 @@ const MainRoutes = () => {
           <Route path="/admin" component={(props) => {
             return (
               <RequireAuth props={{ ...props }} Component={Admin} />
-            )
-          }} />
-          <Route path="/tienda" component={(props) => {
-            return (
-              <RequireAuth props={{ ...props }} Component={Tienda} />
             )
           }} />
           <Route exact path="/login" component={(props) => {
