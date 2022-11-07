@@ -86,6 +86,7 @@ const ProductoExterno = ({ updateMigas }) => {
       title: "Producto",
       dataIndex: "nombre",
       sorter: true,
+      fixed: "left",
       render: (nombre) => {
         return (
           <p>{nombre}</p>
@@ -96,6 +97,7 @@ const ProductoExterno = ({ updateMigas }) => {
       title: "Wiqli",
       dataIndex: "producto_wiqli",
       sorter: true,
+      fixed: "left",
       render: (producto_wiqli) => {
         return (
           <p>{producto_wiqli? producto_wiqli.nombre : ''}</p>
@@ -113,15 +115,6 @@ const ProductoExterno = ({ updateMigas }) => {
         );
       }
     },
-    // {
-    //   title: "Link Vea",
-    //   dataIndex: "url_vea",
-    //   render: (url_vea) => {
-    //     return (
-    //       <p>{url_vea}</p>
-    //     );
-    //   }
-    // },
     {
       title: "Multiplicador Vea",
       dataIndex: "multiplicador_vea",
@@ -134,14 +127,6 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Precio Vea",
       dataIndex: "precio_vea",
-      onCell: (text, record) => {
-        const fondo = 'red';
-        const letra = 'white';
-        return {
-          ['style']: {background: fondo, color: letra},
-          className: 'example-class-in-td',
-        };
-      },
       render: (precio_vea) => {
         return (
           <p>{precio_vea}</p>
@@ -151,28 +136,29 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Diferencia Vea",
       dataIndex: "producto_wiqli",
+      onCell: (row, index) => {
+        const precioWiqli = row.producto_wiqli ? row.producto_wiqli.precio_unitario : 0;
+        const precioVea = row.precio_vea * row.multiplicador_vea;
+        const fondo = precioWiqli - precioVea > 0 ? '#F26161' : '#FFFFFF';
+        const letra = precioWiqli - precioVea > 0 ? '#FFFFFF' : '#000000';
+        return {
+          ['style']: {background: fondo, color: letra},
+          className: 'precio-vea',
+        };
+      },
       render: (producto_wiqli, row) => {
         return (
           <>
             { (producto_wiqli && row.precio_vea) ?
-              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_vea * row.multiplicador_vea) > 0 ? 'red' : 'black' }` }}>
+              <p>
                 { parseFloat(producto_wiqli.precio_unitario - row.precio_vea).toFixed(2)}
               </p> :
-              <p style={{ color: "red" }}>No se cuenta con información</p>
+              <p>Sin información</p>
             }
           </>
         );
       }
     },
-    // {
-    //   title: "Link Tottus",
-    //   dataIndex: "url_tottus",
-    //   render: (url_tottus) => {
-    //     return (
-    //       <p>{url_tottus}</p>
-    //     );
-    //   }
-    // },
     {
       title: "Multiplicador Tottus",
       dataIndex: "multiplicador_tottus",
@@ -194,28 +180,29 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Diferencia Tottus",
       dataIndex: "producto_wiqli",
+      onCell: (row, index) => {
+        const precioWiqli = row.producto_wiqli ? row.producto_wiqli.precio_unitario : 0;
+        const precioVea = row.precio_tottus * row.multiplicador_tottus;
+        const fondo = precioWiqli - precioVea > 0 ? '#79DF9A' : '#FFFFFF';
+        const letra = precioWiqli - precioVea > 0 ? '#FFFFFF' : '#000000';
+        return {
+          ['style']: {background: fondo, color: letra},
+          className: 'precio-tottus',
+        };
+      },
       render: (producto_wiqli, row) => {
         return (
           <>
             { (producto_wiqli && row.precio_tottus) ?
-              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_tottus * row.multiplicador_tottus) > 0 ? 'red' : 'black' }` }}>
+              <p>
                 { parseFloat(producto_wiqli.precio_unitario - row.precio_tottus).toFixed(2)}
               </p> :
-              <p style={{ color: "red" }}>No se cuenta con información</p>
+              <p>Sin información</p>
             }
           </>
         );
       }
     },
-    // {
-    //   title: "Link Wong",
-    //   dataIndex: "url_wong",
-    //   render: (url_wong) => {
-    //     return (
-    //       <p>{url_wong}</p>
-    //     );
-    //   }
-    // },
     {
       title: "Multiplicador Wong",
       dataIndex: "multiplicador_wong",
@@ -237,14 +224,24 @@ const ProductoExterno = ({ updateMigas }) => {
     {
       title: "Diferencia Wong",
       dataIndex: "producto_wiqli",
+      onCell: (row, index) => {
+        const precioWiqli = row.producto_wiqli ? row.producto_wiqli.precio_unitario : 0;
+        const precioVea = row.precio_wong * row.multiplicador_wong;
+        const fondo = precioWiqli - precioVea > 0 ? '#4EABD9' : '#FFFFFF';
+        const letra = precioWiqli - precioVea > 0 ? '#FFFFFF' : '#000000';
+        return {
+          ['style']: {background: fondo, color: letra},
+          className: 'precio-wong',
+        };
+      },
       render: (producto_wiqli, row) => {
         return (
           <>
             { (producto_wiqli && row.precio_wong) ? 
-              <p style={{ color: `${producto_wiqli.precio_unitario - (row.precio_wong * row.multiplicador_wong) > 0 ? 'red' : 'black' }` }}>
+              <p>
                 { parseFloat(producto_wiqli.precio_unitario - row.precio_wong).toFixed(2)}
               </p> :
-              <p style={{ color: "red" }}>No se cuenta con información</p>
+              <p>Sin información</p>
             }
           </>
         );
@@ -311,6 +308,7 @@ const ProductoExterno = ({ updateMigas }) => {
               pagination={pagination}
               loading={loading}
               onChange={fetchAll}
+              scroll={{ x: 2000 }}
               bordered
             />
           </div>

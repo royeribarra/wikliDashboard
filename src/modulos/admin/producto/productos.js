@@ -314,6 +314,7 @@ const ProductosWiqli = ({ updateMigas }) => {
               pagination={pagination}
               loading={loading}
               onChange={fetchAll}
+              scroll={{ x: 2000 }}
               bordered
             />
             <DeleteProducto 
