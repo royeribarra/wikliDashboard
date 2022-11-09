@@ -21,6 +21,7 @@ import configuracion from '../modulos/admin/configuracion/configuracion';
 import estadisticaProducto from '../modulos/admin/productoExterno/estadisticaProducto';
 import cuponDescuento from '../modulos/admin/cuponDescuento/cuponDescuento';
 import cuponForm from '../modulos/admin/cuponDescuento/cuponForm';
+import precioComparativo from '../modulos/admin/precioComparativo/precioComparativo';
 
 class AdminRoutes extends React.Component{
   render(){
@@ -59,6 +60,8 @@ class AdminRoutes extends React.Component{
             <Route exact path={"/admin/cupones-descuento"}                component = { cuponDescuento } />
             <Route exact path={`/admin/cupones-descuento/crear`}          component = { cuponForm } />
             <Route exact path={"/admin/cupon-descuento/:cuponId"}         component = { cuponForm } />
+
+            <Route exact path={"/admin/comparacion-precios"}              component = { precioComparativo } />
             {/* <Redirect from="/"    to={`/admin/usuarios`} />
             <Redirect from=""     to={`/admin/usuarios`} />
             <Redirect from="**"   to={`/admin/usuarios`} /> */}

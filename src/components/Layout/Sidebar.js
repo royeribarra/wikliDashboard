@@ -58,8 +58,8 @@ const navComponents = [
     Icon: MdGroupWork,
   },
   {
-    to: '/precios-externos',
-    name: 'Precios Externos',
+    to: '/comparacion-precios',
+    name: 'Comparación precios',
     exact: false,
     Icon: MdGroupWork,
   },
