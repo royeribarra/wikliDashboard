@@ -171,9 +171,7 @@ const PrecioComparativo = ({ updateMigas }) => {
     <Page title="Total comparativo de precios">
       <Buscar titulo="Buscar usuario" form={form} handleParentSearch={fetchAll}/>
       <Card>
-        <CardHeader>
-          Lista de usuarios
-        </CardHeader>
+        
         <CardBody>
             <TableStrap className="table table-bordered">
               <thead>
