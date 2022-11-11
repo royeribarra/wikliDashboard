@@ -7,7 +7,6 @@ import { TiendaService } from "../../../servicios/tiendaService";
 import { getProfiles, getSedes } from "../../../redux/actions/userActions";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import ImageUploading from "react-images-uploading";
-import ReactBnbGallery from "react-bnb-gallery";
 import { Card, CardBody, CardHeader, Button as ButtonStrap } from "reactstrap";
 import Page from 'components/Page';
 
@@ -398,12 +397,6 @@ const TiendaForm = ({ updateMigas }) => {
                           </Fragment>
                         ))}
                       </div>
-                      <ReactBnbGallery
-                        show={isOpen}
-                        activePhotoIndex={galleryActiveIdx}
-                        photos={imagesGallery}
-                        onClose={() => setIsOpen(false)}
-                      />
                     </div>
                   )}
                 </ImageUploading>
