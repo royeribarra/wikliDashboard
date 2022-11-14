@@ -5,7 +5,7 @@ import { Table, Form, Input, Radio, InputNumber } from "antd";
 import { ConfiguracionService } from "../../../servicios/configuracionService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import { Card, CardBody, CardHeader, Button } from "reactstrap";
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 import { toastr } from "react-redux-toastr";
 
 const MontoDescuento = ({data, mandarTipoFee, mandarValorFee}) => {

@@ -6,7 +6,7 @@ import { UserService } from "../../../servicios/userService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
 import { Card, CardBody, CardHeader, Button } from "reactstrap";
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 
 const Usuarios = ({ updateMigas }) => {
   const userService = new UserService("users");

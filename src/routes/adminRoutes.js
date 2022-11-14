@@ -7,9 +7,8 @@ import Tiendas from "../modulos/admin/tiendas/tiendas";
 import UsuarioForm from "../modulos/admin/usuarios/usuarioForm";
 import TiendaForm from "../modulos/admin/tiendas/tiendaForm";
 import Distritos from "../modulos/admin/distritos/distritos";
-import MainLayout from 'components/Layout/MainLayout';
-import PageSpinner from 'components/PageSpinner';
-import componentQueries from 'react-component-queries';
+import MainLayout from '../components/Layout/MainLayout';
+import PageSpinner from '../components/PageSpinner';
 import pedidos from '../modulos/admin/wiqli/pedidos';
 import ProductosWiqli from '../modulos/admin/producto/productos';
 import ProductoForm from "../modulos/admin/producto/productoForm";
@@ -71,28 +70,5 @@ class AdminRoutes extends React.Component{
     );
   }
 };
-const query = ({ width }) => {
-  if (width < 575) {
-    return { breakpoint: 'xs' };
-  }
 
-  if (576 < width && width < 767) {
-    return { breakpoint: 'sm' };
-  }
-
-  if (768 < width && width < 991) {
-    return { breakpoint: 'md' };
-  }
-
-  if (992 < width && width < 1199) {
-    return { breakpoint: 'lg' };
-  }
-
-  if (width > 1200) {
-    return { breakpoint: 'xl' };
-  }
-
-  return { breakpoint: 'xs' };
-};
-
-export default componentQueries(query)(AdminRoutes);
+export default AdminRoutes;

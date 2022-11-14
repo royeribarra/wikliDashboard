@@ -9,8 +9,8 @@ import Buscar from "./buscar";
 import { STORAGE_URL } from "../../../config/constants";
 import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
-import { randomNum } from 'utils/demos';
-import { getColor } from 'utils/colors';
+import { randomNum } from '../../../utils/demos';
+import { getColor } from '../../../utils/colors';
 import { Row, Col } from "reactstrap";
 import {
   Card,

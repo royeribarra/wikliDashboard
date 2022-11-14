@@ -1,9 +1,6 @@
-import Avatar from 'components/Avatar';
-import { UserCard } from 'components/Card';
-import Notifications from 'components/Notifications';
-import SearchInput from 'components/SearchInput';
-import { notificationsData } from 'demos/header';
-import withBadge from 'hocs/withBadge';
+import Avatar from '../Avatar';
+import { UserCard } from '../../components/Card';
+import withBadge from '../../hocs/withBadge';
 import React from 'react';
 import LogService from '../../servicios/logService';
 import StorageService from '../../servicios/storageService';
@@ -31,7 +28,7 @@ import {
   Popover,
   PopoverBody,
 } from 'reactstrap';
-import bn from 'utils/bemnames';
+import bn from '../../utils/bemnames';
 
 const bem = bn.create('header');
 

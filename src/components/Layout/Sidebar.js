@@ -1,9 +1,7 @@
-import logo200Image from 'assets/img/miniLogo.png';
-import sidebarBgImage from 'assets/img/sidebar/sidebar-repo.png';
-import repo from 'assets/img/repo.svg';
-import SourceLink from 'components/SourceLink';
+import sidebarBgImage from '../../assets/img/sidebar/sidebar-repo.png';
+import repo from '../../assets/img/repo.svg';
+import SourceLink from '../../components/SourceLink';
 import React from 'react';
-import { FaGithub } from 'react-icons/fa';
 import {
   MdAccountCircle,
   MdArrowDropDownCircle,
@@ -36,7 +34,7 @@ import {
   NavItem,
   NavLink as BSNavLink,
 } from 'reactstrap';
-import bn from 'utils/bemnames';
+import bn from '../../utils/bemnames';
 
 const sidebarBackground = {
   backgroundImage: `url("${sidebarBgImage}")`,

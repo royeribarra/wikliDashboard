@@ -9,7 +9,7 @@ import { TiendaService } from "../../../servicios/tiendaService";
 import { getProfiles, getSedes } from "../../../redux/actions/userActions";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import { Card, CardBody } from "reactstrap";
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 
 // InputNumber
 const { Option } = Select;

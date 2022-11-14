@@ -3,9 +3,7 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { RequireAuth, UserAuth, TiendaAuth  } from './RequireAuth/RequireAuth';
 import Admin from '../pages/admin/admin';
 import Login from "../pages/login";
-import LoginTienda from "../pages/loginTienda";
 import GAListener from '../components/GAListener';
-import LoginNew from '../pages/loginNew';
 
 const MainRoutes = () => {
   const getBasename = () => {
@@ -25,16 +23,6 @@ const MainRoutes = () => {
               <UserAuth props={{ ...props }} Component={ Login } />
               )
             }} />
-          <Route exact path="/login-tienda" component={(props) => {
-            return (
-              <TiendaAuth props={{ ...props }} Component={ LoginTienda } />
-              )
-            }} />
-          {/* <Route exact path="/royer" component={(props) => {
-            return (
-              <TiendaAuth props={{ ...props }} Component={ LoginNew } />
-              )
-          }} /> */}
           <Redirect from="/" to={`/login`} />
           <Redirect from="**" to={`/`} />
           <Redirect from="" to={`/`} />

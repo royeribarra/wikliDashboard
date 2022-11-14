@@ -6,7 +6,7 @@ import { ScrapService } from "../../../servicios/admin/scrapService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
 import { Card, CardBody, CardHeader, Button, Table as TableStrap } from "reactstrap";
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 
 const tableTypes = ['', 'bordered', 'striped', 'hover'];
 

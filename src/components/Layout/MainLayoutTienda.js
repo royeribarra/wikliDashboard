@@ -6,7 +6,6 @@ import {
   // MdCardGiftcard,
   MdLoyalty,
 } from 'react-icons/md';
-import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 class MainLayoutTienda extends React.Component {
