@@ -200,17 +200,17 @@ const PrecioComparativo = ({ updateMigas }) => {
               <tbody>
               <tr>
                 <td>{fechaInicial + ' - ' + fechaFinal}</td>
-                <td>{info.totalWiqliFrutas}</td>
-                <td>{info.totalOtrosFrutas}</td>
+                <td>{info.totalWiqliFrutas.toFixed(2)}</td>
+                <td>{info.totalOtrosFrutas.toFixed(2)}</td>
                 <td>{info.perFrutas.toFixed(2)}</td>
-                <td>{info.totalWiqliVerduras}</td>
-                <td>{info.totalOtrosVerduras}</td>
+                <td>{info.totalWiqliVerduras.toFixed(2)}</td>
+                <td>{info.totalOtrosVerduras.toFixed(2)}</td>
                 <td>{info.perVerduras.toFixed(2)}</td>
-                <td>{info.totalWiqliCarnes}</td>
-                <td>{info.totalOtrosCarnes}</td>
+                <td>{info.totalWiqliCarnes.toFixed(2)}</td>
+                <td>{info.totalOtrosCarnes.toFixed(2)}</td>
                 <td>{info.perCarnes.toFixed(2)}</td>
-                <td>{info.totalWiqliMenestras}</td>
-                <td>{info.totalOtrosMenestras}</td>
+                <td>{info.totalWiqliMenestras.toFixed(2)}</td>
+                <td>{info.totalOtrosMenestras.toFixed(2)}</td>
                 <td>{info.perMenestras.toFixed(2)}</td>
               </tr>
               </tbody>
