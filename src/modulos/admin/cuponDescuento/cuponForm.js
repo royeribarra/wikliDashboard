@@ -264,7 +264,7 @@ const CuponForm = ({ updateMigas }) => {
               <Button type="primary" htmlType="submit" style={{ margin: "10px" }}>
                 Guardar
               </Button>
-              <NavLink to="/tienda/productos">
+              <NavLink to="/admin/cupones-descuento">
                 <Button type="danger" style={{ margin: "10px" }}>Cancelar</Button>
               </NavLink>
             </Form.Item>

@@ -7,7 +7,7 @@ const Footer = () => {
     <Navbar>
       <Nav navbar>
         <NavItem>
-          2022 Repo dashboard, derechos reservados.
+          2022 Wiqli dashboard, derechos reservados.
         </NavItem>
       </Nav>
     </Navbar>

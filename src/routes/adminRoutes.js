@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 // COMPONENTES DE VISTAS
 import Usuarios from "../modulos/admin/usuarios/usuarios";
 import Tiendas from "../modulos/admin/tiendas/tiendas";

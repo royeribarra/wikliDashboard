@@ -6,9 +6,6 @@ import Login from "../pages/login";
 import GAListener from '../components/GAListener';
 
 const MainRoutes = () => {
-  const getBasename = () => {
-    return `/${process.env.PUBLIC_URL.split('/').pop()}`;
-  };
   return (
     <BrowserRouter>
       <GAListener>

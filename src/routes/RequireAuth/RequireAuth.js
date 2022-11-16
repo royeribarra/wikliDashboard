@@ -21,11 +21,3 @@ export const UserAuth = ({Component}) => {
         return <Redirect from="**" to={`/cliente/mis-procesos`} />
     }
 }
-
-export const TiendaAuth = ({Component}) => {
-    if (!localStorage.getItem("tknData")) {
-        return <Component />
-    }else{
-        return <Redirect from="**" to={`/tienda/devoluciones`} />
-    }
-}
