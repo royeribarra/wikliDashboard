@@ -206,7 +206,7 @@ const PedidoDetalle = () => {
     {
       title: 'Cantidad',
       dataIndex: 'cantidad',
-      width: 100,
+      width: 120,
       editable: true,
       render: (cantidad, row) => {
         return(
@@ -217,13 +217,13 @@ const PedidoDetalle = () => {
     {
       title: 'Precio unitario',
       dataIndex: 'precio_unitario',
-      width: 90,
+      width: 100,
       editable: true,
     },
     {
       title: 'Total',
       dataIndex: 'total',
-      width:80,
+      width:100,
       editable: true,
     },
     {
