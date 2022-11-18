@@ -7,6 +7,8 @@ import Buscar from "./buscar";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
+import { FiEdit } from "react-icons/fi";
+import { BsEye } from "react-icons/bs";
 
 import {
   Card,
@@ -25,8 +27,9 @@ const Pedidos = ({ updateMigas }) => {
 
   let columns = [
     {
-      title: "Número de orden",
+      title: "Orden",
       dataIndex: "id",
+      width: 80,
       render: (id) => {
         return (
           <p>{id}</p>
@@ -34,17 +37,9 @@ const Pedidos = ({ updateMigas }) => {
       }
     },
     {
-      title: "Estatus",
-      dataIndex: "status",
-      render: (status) => {
-        return (
-          <p>{status === 1 ? 'Creado' : 'Completado'}</p>
-        );
-      }
-    },
-    {
       title: "Fecha de entrega",
       dataIndex: "fecha_entrega",
+      width: 120,
       render: (fecha_entrega) => {
         return (
           <p>{fecha_entrega}</p>
@@ -54,6 +49,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Fecha de pedido",
       dataIndex: "created_at",
+      width: 120,
       render: (created_at) => {
         return (
           <p>{created_at.substring(0, 10)}</p>
@@ -63,6 +59,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Cliente",
       dataIndex: "cliente",
+      width: 140,
       render: (cliente) => {
         return(
           <p>{cliente? cliente.nombres + '-' + cliente.apellidos : ''}</p>
@@ -72,6 +69,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Total a pagar",
       dataIndex: "total",
+      width: 100,
       render: (total) => {
         return(
           <p>{total}</p>
@@ -81,6 +79,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Costo delivery",
       dataIndex: "costo_delivery",
+      width: 100,
       render: (costo_delivery) => {
         return(
           <p>{costo_delivery}</p>
@@ -90,6 +89,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Número",
       dataIndex: "cliente",
+      width: 140,
       render: (cliente) => {
         return(
           <p>{cliente? cliente.telefono : ''}</p>
@@ -99,6 +99,7 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Dirección",
       dataIndex: "cliente",
+      width: 150,
       render: (cliente) => {
         return(
           <p>{cliente? cliente.direccion + '-' + cliente.referencia : ''}</p>
@@ -108,72 +109,75 @@ const Pedidos = ({ updateMigas }) => {
     {
       title: "Editar",
       dataIndex: "id",
+      width: 80,
       render: (id) => {
         return (
           <NavLink className="toggle__item" to={`/admin/pedido/${id}`}>
-            <Button color="warning">Editar</Button>
+            <ButtonReactStrap color="warning"><FiEdit /></ButtonReactStrap>
           </NavLink>
         );
       },
     },
+    // {
+    //   title: "Productos",
+    //   dataIndex: "detalle",
+    //   width: 120,
+    //   render: (detalle) => {
+    //     const columnas = [
+    //       {
+    //         title: "Producto",
+    //         dataIndex: 'producto',
+    //         key: 'producto',
+    //         render: (producto, row) => {
+    //           return (
+    //             <p>{producto? producto.nombre : row.nombre_desc}</p>
+    //           );
+    //         }
+    //       },
+    //       {
+    //         title: "Cantidad",
+    //         dataIndex: 'cantidad',
+    //         key: 'cantidad',
+    //         render: (cantidad) => {
+    //           return (
+    //             <p>{cantidad}</p>
+    //           );
+    //         }
+    //       },
+    //       {
+    //         title: "Unidad",
+    //         dataIndex: 'producto',
+    //         key: 'producto',
+    //         render: (producto, row) => {
+    //           return (
+    //             <p>{producto ? producto.unidad.nombre : row.cantidad_desc}</p>
+    //           );
+    //         }
+    //       },
+    //       {
+    //         title: "Total",
+    //         dataIndex: 'total',
+    //         key: 'total',
+    //         render: (total) => {
+    //           return (
+    //             <p>{total}</p>
+    //           );
+    //         }
+    //       },
+    //     ];
+    //     const content = (
+    //       <Table columns={columnas} dataSource={detalle} pagination={false} />
+    //     );
+    //     return(
+    //       <Popover content={content} title="" trigger="click">
+    //         <Button type="primary">Ver +</Button>
+    //       </Popover>
+    //     );
+    //   }
+    // },
     {
-      title: "Productos",
-      dataIndex: "detalle",
-      render: (detalle) => {
-        const columnas = [
-          {
-            title: "Producto",
-            dataIndex: 'producto',
-            key: 'producto',
-            render: (producto, row) => {
-              return (
-                <p>{producto? producto.nombre : row.nombre_desc}</p>
-              );
-            }
-          },
-          {
-            title: "Cantidad",
-            dataIndex: 'cantidad',
-            key: 'cantidad',
-            render: (cantidad) => {
-              return (
-                <p>{cantidad}</p>
-              );
-            }
-          },
-          {
-            title: "Unidad",
-            dataIndex: 'producto',
-            key: 'producto',
-            render: (producto, row) => {
-              return (
-                <p>{producto ? producto.unidad.nombre : row.cantidad_desc}</p>
-              );
-            }
-          },
-          {
-            title: "Total",
-            dataIndex: 'total',
-            key: 'total',
-            render: (total) => {
-              return (
-                <p>{total}</p>
-              );
-            }
-          },
-        ];
-        const content = (
-          <Table columns={columnas} dataSource={detalle} pagination={false} />
-        );
-        return(
-          <Popover content={content} title="" trigger="click">
-            <Button type="primary">Ver +</Button>
-          </Popover>
-        );
-      }
-    },
-    {
-      title: "Comprobante",
+      title: "Boleta",
+      width: 100,
       render: (row) => {
         const verPdf = () => {
           console.log(row);
@@ -183,15 +187,19 @@ const Pedidos = ({ updateMigas }) => {
         }
 
         return(
-          <Button>
-            <a href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/ver-pdf/${row.id}`} target = "_blank">Ver PDF</a>
-          </Button>
+          <a href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/ver-pdf/${row.id}`} target = "_blank">
+            <ButtonReactStrap size="sm">
+              <BsEye/> PDF
+            </ButtonReactStrap>
+          </a>
+          
         );
       }
     },
     {
       title: "Estado",
       dataIndex: "",
+      width: 100,
       render: (row) => {
         const { id, status } = row;
         return (
@@ -295,18 +303,21 @@ const Pedidos = ({ updateMigas }) => {
   return (
     <Page title="Pedidos">
       <Buscar form={form} handleParentSearch={fetchAll} exportExcel={exportExcel} />
-      <Card>
+      <Card style={{ marginTop: "15px" }}>
         <CardHeader>
           Lista de Pedidos
         </CardHeader>
         <CardBody>
           <Table
+            className="table-wiqli-antd"
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={rows}
             pagination={pagination}
             loading={loading}
             onChange={fetchAll}
+            bordered
+            scroll={{ x: 800 }}
           />
         </CardBody>
       </Card>
