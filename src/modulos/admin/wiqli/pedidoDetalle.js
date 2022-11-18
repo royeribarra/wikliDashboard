@@ -16,6 +16,9 @@ import {
   CloseCircleTwoTone
 } from '@ant-design/icons';
 import { toastr } from 'react-redux-toastr';
+import { FiEdit } from "react-icons/fi";
+import {  AiFillSave } from "react-icons/ai";
+import { GiCancel} from "react-icons/gi";
 
 const { Option } = Select;
 
@@ -203,6 +206,7 @@ const PedidoDetalle = () => {
     {
       title: 'Cantidad',
       dataIndex: 'cantidad',
+      width: 100,
       editable: true,
       render: (cantidad, row) => {
         return(
@@ -213,42 +217,48 @@ const PedidoDetalle = () => {
     {
       title: 'Precio unitario',
       dataIndex: 'precio_unitario',
+      width: 90,
       editable: true,
     },
     {
       title: 'Total',
       dataIndex: 'total',
+      width:80,
       editable: true,
     },
     {
       title: 'Acción',
       dataIndex: 'operation',
+      width:140,
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
-          <span style={{ fontSize: "20px" }}>
-            <Typography.Link
+          <>
+            <ButtonReactStrap
+              title="Guardar"
+              color="primary"
               onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
             >
-              <SaveTwoTone />
-            </Typography.Link>
+              <AiFillSave />
+            </ButtonReactStrap>
             <Popconfirm title="¿Cancelar operación?" onConfirm={cancel}>
-              <CloseCircleTwoTone twoToneColor="#eb2f96" />
+              <ButtonReactStrap title="Cancelar" color="danger"><GiCancel /></ButtonReactStrap>
             </Popconfirm>
-          </span>
+          </>
         ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Editar
-          </Typography.Link>
+          <ButtonReactStrap color="warning" disabled={editingKey !== ''} onClick={() => edit(record)} title="Editar">
+            <FiEdit />
+          </ButtonReactStrap>
         );
       },
     },
     {
       title: "Estado",
       dataIndex: "",
+      width: 120,
       render: (row) => {
         const { id, status } = row;
         return (
@@ -443,6 +453,7 @@ const PedidoDetalle = () => {
           </Modal>
           <Form form={form} component={false}>
             <Table
+              className="table-wiqli-antd"
               components={{
                 body: {
                   cell: EditableCell,
@@ -455,6 +466,7 @@ const PedidoDetalle = () => {
               pagination={{
                 onChange: cancel,
               }}
+              scroll={{ x: 800 }}
             />
           </Form>
         </CardBody>
