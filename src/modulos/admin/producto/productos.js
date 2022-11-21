@@ -100,7 +100,7 @@ const ProductosWiqli = ({ updateMigas }) => {
 
   const changeStatusProduct = (productoId) => {
     productoService.updateState(productoId).then(({data}) => {
-      fetchAll(pagination.current);
+      fetchAll(pagination);
     });
   }
 
