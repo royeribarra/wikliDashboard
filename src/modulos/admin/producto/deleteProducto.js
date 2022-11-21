@@ -3,13 +3,13 @@ import { Modal } from "antd";
 import { ProductoService } from "../../../servicios/productoService";
 
 function DeleteProducto({status, handleClose, handleRefreshTable, activeRow}) {
-  const productoService = new ProductoService("products");
+  const productoService = new ProductoService("wiqli/producto");
   const closeModal = () => {
     handleClose(false);
   };
 
   const handleSubmit = () => {
-    productoService.deleteProduct(activeRow, activeRow.id).then((response) => {
+    productoService.deleteProduct(activeRow, activeRow.producto_id).then((response) => {
       closeModal();
       handleRefreshTable();
     })
@@ -24,7 +24,7 @@ function DeleteProducto({status, handleClose, handleRefreshTable, activeRow}) {
       okText="Confirmar"
       cancelText="Cancelar"
     >
-      <p>¿Está seguro de eliminar este Producto: {activeRow.name}?</p>
+      <p>¿Está seguro de eliminar este Producto: {activeRow.producto_nombre}?</p>
     </Modal>
   );
 }

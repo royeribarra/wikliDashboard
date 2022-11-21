@@ -19,7 +19,7 @@ export class ProductoService extends MainService {
   }
   
   deleteProduct(data, id) {
-    return axios.post(`${this.url}/delete/${id}`, data, this.options);
+    return axios.post(`${this.url}/eliminar/${id}`, data, this.options);
   }
 
   agregarInventario(id, data) {

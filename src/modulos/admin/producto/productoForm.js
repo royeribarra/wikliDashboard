@@ -237,17 +237,6 @@ const ProductoForm = ({ updateMigas }) => {
                 ) : (
                     ""
                 )}
-                {/* <Form.Item 
-                  className="formulario__label"
-                  label="Imagen"
-                >
-                  <input 
-                    type="file"
-                    onChange={onFileChange}
-                    accept="image/png, image/jpeg"
-                  >
-                  </input>
-                </Form.Item> */}
                 <Form.Item
                   name="imagen_producto"
                   label="Foto del producto (jpg, png o jepg)"
