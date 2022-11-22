@@ -338,6 +338,7 @@ const PedidoDetalle = () => {
       if(data.state){
         handleCancel();
         obtenerPedidoId();
+        obtenerInformacionPedidoId();
       }
     });
   };
