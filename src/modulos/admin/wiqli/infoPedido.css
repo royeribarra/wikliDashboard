@@ -11,7 +11,20 @@
     font-weight: normal;
 }
 
+.boton-descargar-pdf{
+    margin: 5px 5px;
+}
+
 .boton-descargar-pdf a{
     display: flex !important;
     align-items: center;
+}
+
+.headerInformacionPedido{
+    display: flex;
+}
+
+.headerInformacionPedido p{
+    color: red;
+    margin: 0px;
 }

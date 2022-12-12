@@ -10,13 +10,24 @@ import {
   CardBody,
   CardHeader
 } from 'reactstrap';
-const InfoPedido = ({data}) => 
+import { AdminPedidoService } from "../../../servicios/admin/adminPedidoService";
+
+const InfoPedido = ({data, obtenerInformacionPedidoId}) => 
 {
-  console.log(data);
+  const adminPedidoService = new AdminPedidoService("admin/pedido");
+  const pagarPedido = () => {
+    adminPedidoService.pagarPedido(data.id).then(({data}) => {
+      if(data.state){
+        obtenerInformacionPedidoId();
+      }
+    });
+  }
 
   return (
     <Card className="informacion-pedido">
-      <CardHeader>Información Pedido</CardHeader>
+      <CardHeader className="headerInformacionPedido">
+        Información Pedido<p>{data.pagado ? ':  PAGADO' : ':  POR PAGAR'}</p> 
+      </CardHeader>
       <CardBody>
         <div className="row">
           <div className="col-md-6">
@@ -61,6 +72,9 @@ const InfoPedido = ({data}) =>
         
         <Button outline color="success" className="boton-descargar-pdf">
           <a href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/ver-pdf/${data.id}`} target = "_blank">Descargar PDF<FileExcelFilled /></a>
+        </Button>
+        <Button outline color="success" className="boton-descargar-pdf" onClick={pagarPedido}>
+          Pagar pedido
         </Button>
       </CardBody>
     </Card>

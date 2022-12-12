@@ -2,10 +2,8 @@ import React from 'react';
 import { Switch, Route } from "react-router-dom";
 // COMPONENTES DE VISTAS
 import Usuarios from "../modulos/admin/usuarios/usuarios";
-import Tiendas from "../modulos/admin/tiendas/tiendas";
 // modulos GENERALES
 import UsuarioForm from "../modulos/admin/usuarios/usuarioForm";
-import TiendaForm from "../modulos/admin/tiendas/tiendaForm";
 import Distritos from "../modulos/admin/distritos/distritos";
 import MainLayout from '../components/Layout/MainLayout';
 import PageSpinner from '../components/PageSpinner';
@@ -30,9 +28,6 @@ class AdminRoutes extends React.Component{
           <React.Suspense fallback={<PageSpinner />}>
             <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
 
-            <Route exact path={`/admin/tiendas`}                         component = { Tiendas } />
-            <Route exact path={`/admin/tienda/crear`}                    component = { TiendaForm } />
-            <Route exact path={`/admin/tiendas/:id`}                     component = { TiendaForm } />
 
             <Route exact path={`/admin/distritos`}                       component = { Distritos } />
 

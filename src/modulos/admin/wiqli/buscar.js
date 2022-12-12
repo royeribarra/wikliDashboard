@@ -13,38 +13,15 @@ const { RangePicker } = DatePicker;
 const Buscar = ({form, handleParentSearch, exportExcel}) => 
 {
 
-  let [stores, setStores] = useState([]);
   let [stateExcel, setStateExcel] = useState(false);
   let [fecha, setFecha] = useState({
     fechaInicial: null, fechaFinal: null
   });
-  const getStores = () => {
-    const storeService = new TiendaService('stores');
-    storeService.getAllSimple()
-      .then(({ data }) => {
-        setStores(data);
-      })
-  }
-
-  const listaTiendas = stores.map((tienda) => (
-    <Option value={tienda.id} key={tienda.id}>
-      {tienda.business_name}
-    </Option>
-  ));
-
-  useEffect(() => {
-    getStores();
-  }, []);
 
   const pasarInfo = (event) => {
     event.preventDefault();
     handleParentSearch();
   }
-
-  // const verReportExcel = (event) => {
-  //   event.preventDefault();
-  //   exportExcel();
-  // }
 
   const verReportExcel = (changedValues, allValues) => {
     console.log(allValues)

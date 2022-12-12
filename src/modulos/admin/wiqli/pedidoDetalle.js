@@ -19,6 +19,7 @@ import { toastr } from 'react-redux-toastr';
 import { FiEdit } from "react-icons/fi";
 import {  AiFillSave } from "react-icons/ai";
 import { GiCancel} from "react-icons/gi";
+import { DetallePedidoService } from '../../../servicios/wiqli/detallePedidoService';
 
 const { Option } = Select;
 
@@ -110,6 +111,7 @@ const EditableCell = ({
 
 const PedidoDetalle = () => {
   const pedidoService = new PedidoService("wiqli/pedido");
+  const detallePedidoService = new DetallePedidoService("wiqli/detalle-pedido");
   const { pedidoId } = useParams();
   const [form] = Form.useForm();
   const [formProducto] = Form.useForm();
@@ -191,6 +193,14 @@ const PedidoDetalle = () => {
         );
     });
   }
+
+  const eliminarDetallePedido = (id) => {
+    detallePedidoService.eliminarDetallePedido(id).then(({data})=> {
+      obtenerInformacionPedidoId();
+      obtenerPedidoId();
+      setData(data);
+    });
+  };
 
   const columns = [
     {
@@ -287,6 +297,26 @@ const PedidoDetalle = () => {
           </Fragment>
         );
       },
+    },
+    {
+      title: "Eliminar",
+      dataIndex: "",
+      width: 120,
+      render: (row) => {
+        const { id, status } = row;
+        return (
+          <Fragment>
+            <ButtonReactStrap
+              color="danger"
+              onClick={() => {
+                eliminarDetallePedido(id);
+              }}
+            >
+              Eliminar
+            </ButtonReactStrap>
+          </Fragment>
+        );
+      },
     }
   ];
 
@@ -358,7 +388,7 @@ const PedidoDetalle = () => {
   return (
     <Page title="Información general">
       {
-        dataPedido && <InfoPedido data={dataPedido} />
+        dataPedido && <InfoPedido data={dataPedido} obtenerInformacionPedidoId={obtenerInformacionPedidoId} />
       }
       
       <Card>

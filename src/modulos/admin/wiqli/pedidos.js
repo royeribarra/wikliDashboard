@@ -17,9 +17,11 @@ import {
   Button as ButtonReactStrap
 } from 'reactstrap';
 import { PedidoService } from "../../../servicios/wiqli/pedidoService";
+import { AdminPedidoService } from "../../../servicios/admin/adminPedidoService";
 
 const Pedidos = ({ updateMigas }) => {
   const pedidoService = new PedidoService("wiqli/pedidos");
+  const adminPedidoService = new AdminPedidoService("admin/pedido");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
   const [carriers, setCarriers] = useState([]);
@@ -118,63 +120,6 @@ const Pedidos = ({ updateMigas }) => {
         );
       },
     },
-    // {
-    //   title: "Productos",
-    //   dataIndex: "detalle",
-    //   width: 120,
-    //   render: (detalle) => {
-    //     const columnas = [
-    //       {
-    //         title: "Producto",
-    //         dataIndex: 'producto',
-    //         key: 'producto',
-    //         render: (producto, row) => {
-    //           return (
-    //             <p>{producto? producto.nombre : row.nombre_desc}</p>
-    //           );
-    //         }
-    //       },
-    //       {
-    //         title: "Cantidad",
-    //         dataIndex: 'cantidad',
-    //         key: 'cantidad',
-    //         render: (cantidad) => {
-    //           return (
-    //             <p>{cantidad}</p>
-    //           );
-    //         }
-    //       },
-    //       {
-    //         title: "Unidad",
-    //         dataIndex: 'producto',
-    //         key: 'producto',
-    //         render: (producto, row) => {
-    //           return (
-    //             <p>{producto ? producto.unidad.nombre : row.cantidad_desc}</p>
-    //           );
-    //         }
-    //       },
-    //       {
-    //         title: "Total",
-    //         dataIndex: 'total',
-    //         key: 'total',
-    //         render: (total) => {
-    //           return (
-    //             <p>{total}</p>
-    //           );
-    //         }
-    //       },
-    //     ];
-    //     const content = (
-    //       <Table columns={columnas} dataSource={detalle} pagination={false} />
-    //     );
-    //     return(
-    //       <Popover content={content} title="" trigger="click">
-    //         <Button type="primary">Ver +</Button>
-    //       </Popover>
-    //     );
-    //   }
-    // },
     {
       title: "Boleta",
       width: 100,
@@ -195,6 +140,39 @@ const Pedidos = ({ updateMigas }) => {
           
         );
       }
+    },
+    {
+      title: "Pagado",
+      dataIndex: "",
+      width: 100,
+      render: (row) => {
+        const { id, pagado } = row;
+        return (
+          <Fragment>
+            {pagado > 0 ? (
+              <ButtonReactStrap
+                color="success"
+                className="boton boton--verde boton-estado text-right"
+                onClick={() => {
+                  pagarPedido(id);
+                }}
+              >
+                Pagado
+              </ButtonReactStrap>
+            ) : (
+                <ButtonReactStrap
+                  color="danger"
+                  className="boton boton--plomo boton-estado text-right"
+                  onClick={() => {
+                    pagarPedido(id);
+                  }}
+                >
+                  Por pagar
+                </ButtonReactStrap>
+              )}
+          </Fragment>
+        );
+      },
     },
     {
       title: "Estado",
@@ -248,7 +226,6 @@ const Pedidos = ({ updateMigas }) => {
 
   const fetchAll = (paginationTab = pagination) => {
     const values = form.getFieldsValue();
-    console.log(values);
     
     var fieldsValue = values;
     if(values.fecha){
@@ -258,10 +235,6 @@ const Pedidos = ({ updateMigas }) => {
         'fechaFinal': values['fecha'][1].format('YYYY-MM-DD')
       };
     }
-    // const rangeValue = values['fecha'];
-    // values['fecha'][0] = rangeValue[0].format('YYYY-MM-DD');
-    // values['fecha'][1] = rangeValue[1].format('YYYY-MM-DD');
-    console.log(fieldsValue);
     const searchObj = {
       ...fieldsValue,
       page: paginationTab? paginationTab.current : 1
@@ -296,6 +269,12 @@ const Pedidos = ({ updateMigas }) => {
 
   const changeStatusPedido = (id) => {
     pedidoService.updateState(id).then(() => {
+      fetchAll(pagination.current);
+    });
+  }
+
+  const pagarPedido = (id) => {
+    adminPedidoService.pagarPedido(id).then(() => {
       fetchAll(pagination.current);
     });
   }
