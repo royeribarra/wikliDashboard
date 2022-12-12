@@ -198,7 +198,6 @@ const PedidoDetalle = () => {
     detallePedidoService.eliminarDetallePedido(id).then(({data})=> {
       obtenerInformacionPedidoId();
       obtenerPedidoId();
-      setData(data);
     });
   };
 
