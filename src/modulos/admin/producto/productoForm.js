@@ -205,10 +205,13 @@ const ProductoForm = ({ updateMigas }) => {
                 <div className="col-md-6">
                   <Form.Item
                     className="formulario__label"
-                    name={"stock"}
-                    label="Stock"
+                    name={"disponibilidad_limitada"}
+                    label="Sujeto a disponibilidad"
                   >
-                    <Input className="input-padre" />
+                    <Select>
+                      <Option value={1}>Si</Option>
+                      <Option value={0}>No</Option>
+                    </Select>
                   </Form.Item>
                 </div>
                 <div className="col-md-6">
