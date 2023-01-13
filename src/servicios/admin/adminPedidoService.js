@@ -6,8 +6,23 @@ export class AdminPedidoService extends MainService {
     super(url);
   }
 
-  pagarPedido(id)
+  pagarTotalPedido(id)
   {
-    return axios.get(`${this.url}/pagar-pedido/${id}`, this.options);
+    return axios.get(`${this.url}/pagar-total-pedido/${id}`, this.options);
+  }
+
+  cancelarPagoPedido(id)
+  {
+    return axios.get(`${this.url}/cancelar-pago-pedido/${id}`, this.options);
+  }
+
+  registrarPagoPedido(id, params)
+  {
+    return axios.post(`${this.url}/registrar-pago-pedido/${id}`, params, this.options);
+  }
+
+  obtenerPagos(id)
+  {
+    return axios.get(`${this.url}/obtener-pagos/${id}`, this.options);
   }
 }

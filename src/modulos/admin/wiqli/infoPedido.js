@@ -12,13 +12,24 @@ import {
 } from 'reactstrap';
 import { AdminPedidoService } from "../../../servicios/admin/adminPedidoService";
 
-const InfoPedido = ({data, obtenerInformacionPedidoId}) => 
+function InfoPedido({data, obtenerInformacionPedidoId, obtenerPedidoId})
 {
   const adminPedidoService = new AdminPedidoService("admin/pedido");
+  
   const pagarPedido = () => {
-    adminPedidoService.pagarPedido(data.id).then(({data}) => {
+    adminPedidoService.pagarTotalPedido(data.id).then(({data}) => {
       if(data.state){
         obtenerInformacionPedidoId();
+        obtenerPedidoId();
+      }
+    });
+  }
+
+  const cancelarPagoPedido = () => {
+    adminPedidoService.cancelarPagoPedido(data.id).then(({data}) => {
+      if(data.state){
+        obtenerInformacionPedidoId();
+        obtenerPedidoId();
       }
     });
   }
@@ -26,7 +37,13 @@ const InfoPedido = ({data, obtenerInformacionPedidoId}) =>
   return (
     <Card className="informacion-pedido">
       <CardHeader className="headerInformacionPedido">
-        Información Pedido<p>{data.pagado ? ':  PAGADO' : ':  POR PAGAR'}</p> 
+        Información Pedido
+        <p>{
+            data.pagado ? 
+            ':  PAGADO' : 
+            `:  POR PAGAR S/ ${parseFloat(data.total - data.montoPagado).toFixed(2)}`
+            }
+        </p> 
       </CardHeader>
       <CardBody>
         <div className="row">
@@ -73,9 +90,15 @@ const InfoPedido = ({data, obtenerInformacionPedidoId}) =>
         <Button outline color="success" className="boton-descargar-pdf">
           <a href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/ver-pdf/${data.id}`} target = "_blank">Descargar PDF<FileExcelFilled /></a>
         </Button>
-        <Button outline color="success" className="boton-descargar-pdf" onClick={pagarPedido}>
-          Pagar pedido
-        </Button>
+        {
+          data.pagado ? 
+          (<Button outline color="danger" className="boton-descargar-pdf" onClick={cancelarPagoPedido}>
+            Cancelar pago Total
+          </Button>) : 
+          (<Button outline color="success" className="boton-descargar-pdf" onClick={pagarPedido}>
+            Pagar pedido
+          </Button>)
+        }
       </CardBody>
     </Card>
   );

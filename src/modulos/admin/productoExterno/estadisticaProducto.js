@@ -109,7 +109,7 @@ const EstadisticaProducto = ({ updateMigas }) => {
 
   const getProductoInfoScraping = (id) => {
     estadisticaService.getPreciosScraping(id).then(({data})=> {
-      console.log(data)
+      
       if(data.state)
       {
         const vea = [];

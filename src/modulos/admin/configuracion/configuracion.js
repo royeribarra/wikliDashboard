@@ -68,7 +68,7 @@ const Configuracion = ({ updateMigas }) => {
 
   const getConfiguracionInfo = () => {
     configuracionService.getConfiguracion().then(({data}) => {
-      console.log(data)
+      
       setConfiguracion(data);
       form.setFieldsValue(data);
     });

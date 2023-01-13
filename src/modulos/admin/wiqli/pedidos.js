@@ -125,9 +125,8 @@ const Pedidos = ({ updateMigas }) => {
       width: 100,
       render: (row) => {
         const verPdf = () => {
-          console.log(row);
           pedidoService.verPdf().then(({data}) => {
-            console.log(data)
+            
           })
         }
 
@@ -154,7 +153,7 @@ const Pedidos = ({ updateMigas }) => {
                 color="success"
                 className="boton boton--verde boton-estado text-right"
                 onClick={() => {
-                  pagarPedido(id);
+                  cancelarPagoPedido(id);
                 }}
               >
                 Pagado
@@ -164,7 +163,7 @@ const Pedidos = ({ updateMigas }) => {
                   color="danger"
                   className="boton boton--plomo boton-estado text-right"
                   onClick={() => {
-                    pagarPedido(id);
+                    pagarTotalPedido(id);
                   }}
                 >
                   Por pagar
@@ -252,17 +251,16 @@ const Pedidos = ({ updateMigas }) => {
 
   const exportExcel = () => {
     const values = form.getFieldsValue();
-    console.log(values)
     if(values.fecha){
       let fechaInicial = values.fecha[0].format('YYYY-MM-DD');
       let fechaFinal = values.fecha[1].format('YYYY-MM-DD');
       pedidoService.getExcel(fechaInicial, fechaFinal).then(({data}) => {
-        console.log(data);
+        
       })
     }
     if(!values.fecha){
       pedidoService.getExcelAll().then(({data}) => {
-        console.log(data);
+        
       })
     }
   }
@@ -273,8 +271,14 @@ const Pedidos = ({ updateMigas }) => {
     });
   }
 
-  const pagarPedido = (id) => {
-    adminPedidoService.pagarPedido(id).then(() => {
+  const pagarTotalPedido = (id) => {
+    adminPedidoService.pagarTotalPedido(id).then(() => {
+      fetchAll(pagination.current);
+    });
+  }
+
+  const cancelarPagoPedido = (id) => {
+    adminPedidoService.cancelarPagoPedido(id).then(() => {
       fetchAll(pagination.current);
     });
   }

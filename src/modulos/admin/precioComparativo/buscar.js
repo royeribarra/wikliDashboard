@@ -23,7 +23,7 @@ const Buscar = ({form, handleParentSearch}) =>
   }
 
   const onChange = (date, dateString) => {
-    console.log(date, dateString);
+    
   };
 
   useEffect(() => {

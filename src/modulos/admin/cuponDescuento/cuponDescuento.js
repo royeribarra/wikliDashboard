@@ -40,7 +40,7 @@ const CuponDescuento = ({ updateMigas }) => {
   };
 
   const fetchAll = (paginationTab = pagination) => {
-    console.log(paginationTab)
+    
     const values = form.getFieldsValue();
     const searchObj = {
       ...values,

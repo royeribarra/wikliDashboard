@@ -185,9 +185,9 @@ const Pedidos = ({ updateMigas }) => {
       title: "Comprobante",
       render: (row) => {
         const verPdf = () => {
-          console.log(row);
+          
           pedidoService.verPdf().then(({data}) => {
-            console.log(data)
+            
           })
         }
 
@@ -249,7 +249,7 @@ const Pedidos = ({ updateMigas }) => {
 
   const fetchAll = (paginationTab = pagination) => {
     const values = form.getFieldsValue();
-    console.log(values);
+    
     
     var fieldsValue = values;
     if(values.fecha){
@@ -262,7 +262,7 @@ const Pedidos = ({ updateMigas }) => {
     // const rangeValue = values['fecha'];
     // values['fecha'][0] = rangeValue[0].format('YYYY-MM-DD');
     // values['fecha'][1] = rangeValue[1].format('YYYY-MM-DD');
-    console.log(fieldsValue);
+   
     const searchObj = {
       ...fieldsValue,
       page: paginationTab? paginationTab.current : 1
@@ -280,17 +280,17 @@ const Pedidos = ({ updateMigas }) => {
 
   const exportExcel = () => {
     const values = form.getFieldsValue();
-    console.log(values)
+    
     if(values.fecha){
       let fechaInicial = values.fecha[0].format('YYYY-MM-DD');
       let fechaFinal = values.fecha[1].format('YYYY-MM-DD');
       pedidoService.getExcel(fechaInicial, fechaFinal).then(({data}) => {
-        console.log(data);
+        
       })
     }
     if(!values.fecha){
       pedidoService.getExcelAll().then(({data}) => {
-        console.log(data);
+        
       })
     }
   }

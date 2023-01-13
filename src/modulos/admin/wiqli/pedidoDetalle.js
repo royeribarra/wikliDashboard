@@ -1,28 +1,24 @@
-import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button, Select } from 'antd';
+import { Form, Input, InputNumber, Popconfirm, Table, Button, Select } from 'antd';
 import React, { useEffect, useState, Fragment } from 'react';
 import { PedidoService } from '../../../servicios/wiqli/pedidoService';
-import { NavLink, useRouteMatch,  useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./pedidoDetalle.css";
-import { CardBody, Card, Button as ButtonReactStrap, CardHeader, Modal, ModalBody,
+import { CardBody, Card, Button as ButtonReactStrap, Modal, ModalBody,
   ModalFooter,
-  ModalHeader, } from 'reactstrap';
+  ModalHeader,
+  CardHeader, } from 'reactstrap';
 import Page from '../../../components/Page';
 import 'antd/dist/antd.css';
 import axios from "axios";
 import InfoPedido from './infoPedido';
-import {
-  EditOutlined,
-  SaveTwoTone,
-  CloseCircleTwoTone
-} from '@ant-design/icons';
 import { toastr } from 'react-redux-toastr';
 import { FiEdit } from "react-icons/fi";
 import {  AiFillSave } from "react-icons/ai";
 import { GiCancel} from "react-icons/gi";
 import { DetallePedidoService } from '../../../servicios/wiqli/detallePedidoService';
+import RegistroPago from './registroPago';
 
 const { Option } = Select;
-
 
 const fetch = (value, callback) => {
   let timeout;
@@ -124,10 +120,6 @@ const PedidoDetalle = () => {
 
   const showModal = () => {
     setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -387,10 +379,15 @@ const PedidoDetalle = () => {
   return (
     <Page title="Información general">
       {
-        dataPedido && <InfoPedido data={dataPedido} obtenerInformacionPedidoId={obtenerInformacionPedidoId} />
+        dataPedido && 
+        <InfoPedido
+          data={dataPedido}
+          obtenerInformacionPedidoId={obtenerInformacionPedidoId}
+          obtenerPedidoId={obtenerPedidoId}
+        />
       }
       
-      <Card>
+      <Card style={{ marginTop: "15px" }}>
         <CardBody>
           <ButtonReactStrap color="primary" onClick={showModal} style={{ marginBottom: "20px" }}>
             Agregar producto
@@ -501,6 +498,9 @@ const PedidoDetalle = () => {
           </Form>
         </CardBody>
       </Card>
+      {
+        dataPedido && <RegistroPago pedidoId={pedidoId} dataPedido={dataPedido} />
+      }
     </Page>
   );
 };

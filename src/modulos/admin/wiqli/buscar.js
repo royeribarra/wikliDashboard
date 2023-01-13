@@ -24,7 +24,7 @@ const Buscar = ({form, handleParentSearch, exportExcel}) =>
   }
 
   const verReportExcel = (changedValues, allValues) => {
-    console.log(allValues)
+    
     let newVallues = fecha;
     if(allValues.fecha){
       let fechaInicial = allValues.fecha[0].format('YYYY-MM-DD');
