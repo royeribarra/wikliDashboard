@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import Usuarios from "../modulos/admin/usuarios/usuarios";
 // modulos GENERALES
 import UsuarioForm from "../modulos/admin/usuarios/usuarioForm";
-import Distritos from "../modulos/admin/distritos/distritos";
 import MainLayout from '../components/Layout/MainLayout';
 import PageSpinner from '../components/PageSpinner';
 import pedidos from '../modulos/admin/wiqli/pedidos';
@@ -27,9 +26,6 @@ class AdminRoutes extends React.Component{
         <MainLayout breakpoint={this.props.breakpoint}>
           <React.Suspense fallback={<PageSpinner />}>
             <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
-
-
-            <Route exact path={`/admin/distritos`}                       component = { Distritos } />
 
             <Route exact path={`/admin/usuarios`}                        component = { Usuarios } />
             <Route exact path={`/admin/usuario/crear`}                   component = { UsuarioForm } />
@@ -56,9 +52,6 @@ class AdminRoutes extends React.Component{
             <Route exact path={"/admin/cupon-descuento/:cuponId"}         component = { cuponForm } />
 
             <Route exact path={"/admin/comparacion-precios"}              component = { precioComparativo } />
-            {/* <Redirect from="/"    to={`/admin/usuarios`} />
-            <Redirect from=""     to={`/admin/usuarios`} />
-            <Redirect from="**"   to={`/admin/usuarios`} /> */}
           </React.Suspense>
         </MainLayout>
       </Switch>

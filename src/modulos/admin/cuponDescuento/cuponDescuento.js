@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Form, Upload, Button, Image } from "antd";
+import { Table, Form } from "antd";
 import { CuponService } from "../../../servicios/admin/cuponService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
-import { STORAGE_URL } from "../../../config/constants";
 import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
 import {
@@ -19,10 +18,8 @@ import ModalConfirmacionReferente from "./modalConfirmacionReferente";
 
 const CuponDescuento = ({ updateMigas }) => {
   const cuponService = new CuponService("wiqli/cupones-descuento");
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
   const [form] = Form.useForm();
-  const [filesRecorded, setFilesRecorded] = useState([]);
-  const btnUploadFileRecorded = useRef(null);
   const [showDelModal, setShowDelModal] = useState(false);
   const [showModalConfirmacionReferente, setShowModalConfirmacionReferente] = useState(false);
   const [activeRow, setActiveRow] = useState({});
@@ -33,11 +30,6 @@ const CuponDescuento = ({ updateMigas }) => {
     total: 0,
   });
   const [loading] = useState(false);
-
-  const handleTableChangeUser = (values) => {
-    const { current } = values;
-    fetchAll(current);
-  };
 
   const fetchAll = (paginationTab = pagination) => {
     

@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input, Select } from "antd";
+import React from "react";
+import { Form, Input } from "antd";
 import {
   Button,
   Card,
   CardBody,
   CardHeader
 } from 'reactstrap';
-import { CategoriaService } from "../../../servicios/categoriaService";
 
-const { Option } = Select;
 const Buscar = ({form, handleParentSearch}) => 
 {
-  const categoriaService = new CategoriaService("wiqli/categorias/todos");
-  const [categorias, setCategorias] = useState([]);
-
   const pasarInfo = (event) => {
     event.preventDefault();
     handleParentSearch();
   }
-
-  useEffect(() => {
-    categoriaService.getTodos().then(({data})=> {
-      setCategorias(data);
-    });
-  }, [])
 
   return (
     <Card className="filtro-producto" style={{ marginBottom: "15px" }}>

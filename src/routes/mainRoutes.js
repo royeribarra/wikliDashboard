@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
-import { RequireAuth, UserAuth, TiendaAuth  } from './RequireAuth/RequireAuth';
+import { RequireAuth, UserAuth } from './RequireAuth/RequireAuth';
 import Admin from '../pages/admin/admin';
 import Login from "../pages/login";
 import GAListener from '../components/GAListener';

@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavLink, useRouteMatch, useParams } from "react-router-dom";
+import { useRouteMatch, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Form, Upload, Button, Image } from "antd";
+import { Table, Form } from "antd";
 import { EstadisticaService } from "../../../servicios/estadisticaService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import { Line } from 'react-chartjs-2';
-import Buscar from "./buscar";
-import { STORAGE_URL } from "../../../config/constants";
-import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
 import { randomNum } from '../../../utils/demos';
 import { getColor } from '../../../utils/colors';
@@ -15,24 +12,16 @@ import { Row, Col } from "reactstrap";
 import {
   Card,
   CardBody,
-  CardHeader,
-  Button as ButtonReact
+  CardHeader
 } from 'reactstrap';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const EstadisticaProducto = ({ updateMigas }) => {
   const estadisticaService = new EstadisticaService("wiqli/producto-externo/estadistica");
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
   const [form] = Form.useForm();
-  const [filesRecorded, setFilesRecorded] = useState([]);
-  const btnUploadFileRecorded = useRef(null);
-  const [showDelModal, setShowDelModal] = useState(false);
   const params = useParams();
-  const [activeRow, setActiveRow] = useState({});
   const [rows, setRows] = useState([]);
-  const [dataVea, setDataVea] = useState([]);
-  const [dataTottus, setDataTottus] = useState([]);
-  const [dataWong, setDataWong] = useState([]);
   const [loading] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -124,9 +113,6 @@ const EstadisticaProducto = ({ updateMigas }) => {
         data.wong.forEach(el => {
           wong.push(el.precio_unitario_online);
         });
-        setDataVea(vea);
-        setDataTottus(tottus);
-        setDataWong(wong);
       }
     });
   }
@@ -146,20 +132,6 @@ const EstadisticaProducto = ({ updateMigas }) => {
       });
       setRows(data.data);
     });
-  };
-
-  const handleParentSearch = () => {
-    let newPagination = {
-      current: 1,
-      pageSize: 10,
-      total: 0,
-    }
-    fetchAll(newPagination);
-  }
-
-  const deleteRecord = (id, row) => {
-    setActiveRow(row);
-    setShowDelModal(true);
   };
 
   useEffect(() => {

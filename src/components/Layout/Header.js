@@ -8,19 +8,12 @@ import StorageService from '../../servicios/storageService';
 import {
   MdClearAll,
   MdExitToApp,
-  MdHelp,
-  MdInsertChart,
-  MdMessage,
   MdNotificationsActive,
-  MdNotificationsNone,
-  MdPersonPin,
-  MdSettingsApplications,
 } from 'react-icons/md';
 import {
   Button,
   ListGroup,
   ListGroupItem,
-  // NavbarToggler,
   Nav,
   Navbar,
   NavItem,
@@ -31,19 +24,6 @@ import {
 import bn from '../../utils/bemnames';
 
 const bem = bn.create('header');
-
-const MdNotificationsActiveWithBadge = withBadge({
-  size: 'md',
-  color: 'primary',
-  style: {
-    top: -10,
-    right: -10,
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  children: <small>5</small>,
-})(MdNotificationsActive);
 
 class Header extends React.Component {
   state = {
@@ -76,7 +56,6 @@ class Header extends React.Component {
   };
 
   render() {
-    const { isNotificationConfirmed } = this.state;
     const storageService = new StorageService();
     const closeSession = () => {
       const logService = new LogService();
@@ -92,38 +71,8 @@ class Header extends React.Component {
             <MdClearAll size={25} />
           </Button>
         </Nav>
-        {/* <Nav navbar>
-          <SearchInput />
-        </Nav> */}
 
         <Nav navbar className={bem.e('nav-right')}>
-          {/* <NavItem className="d-inline-flex">
-            <NavLink id="Popover1" className="position-relative">
-              {isNotificationConfirmed ? (
-                <MdNotificationsNone
-                  size={25}
-                  className="text-secondary can-click"
-                  onClick={this.toggleNotificationPopover}
-                />
-              ) : (
-                <MdNotificationsActiveWithBadge
-                  size={25}
-                  className="text-secondary can-click animated swing infinite"
-                  onClick={this.toggleNotificationPopover}
-                />
-              )}
-            </NavLink>
-            <Popover
-              placement="bottom"
-              isOpen={this.state.isOpenNotificationPopover}
-              toggle={this.toggleNotificationPopover}
-              target="Popover1"
-            >
-              <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
-              </PopoverBody>
-            </Popover>
-          </NavItem> */}
 
           <NavItem>
             <NavLink id="Popover2">
@@ -144,25 +93,9 @@ class Header extends React.Component {
                 <UserCard
                   title={userLocal.fullname + (userLocal.tienda? '-' + userLocal.tienda.business_name: '')}
                   subtitle={userLocal.email}
-                  // text="Last updated 3 mins ago"
                   className="border-light"
                 >
                   <ListGroup flush>
-                    {/* <ListGroupItem tag="button" action className="border-light">
-                      <MdPersonPin /> Profile
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
-                    </ListGroupItem> */}
                     <ListGroupItem tag="button" action className="border-light" onClick={closeSession}>
                       <MdExitToApp /> Salir
                     </ListGroupItem>

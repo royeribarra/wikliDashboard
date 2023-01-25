@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Form, Input, Radio, InputNumber } from "antd";
+import { Form, Input, Radio, InputNumber } from "antd";
 import { ConfiguracionService } from "../../../servicios/configuracionService";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import { Card, CardBody, CardHeader, Button } from "reactstrap";
@@ -53,9 +53,8 @@ const MontoDescuento = ({data, mandarTipoFee, mandarValorFee}) => {
 
 const Configuracion = ({ updateMigas }) => {
   const configuracionService = new ConfiguracionService("wiqli/configuracion");
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
   const [form] = Form.useForm();
-  const [loading] = useState(false);
   const [configuracion, setConfiguracion] = useState(
     {
       id: 1,

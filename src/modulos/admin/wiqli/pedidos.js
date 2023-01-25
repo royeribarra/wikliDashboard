@@ -24,8 +24,17 @@ const Pedidos = ({ updateMigas }) => {
   const adminPedidoService = new AdminPedidoService("admin/pedido");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
-  const [carriers, setCarriers] = useState([]);
-  const [dia, setDia] = useState();
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
 
   let columns = [
     {
@@ -53,8 +62,9 @@ const Pedidos = ({ updateMigas }) => {
       dataIndex: "created_at",
       width: 120,
       render: (created_at) => {
+        let newDate = new Date(created_at);
         return (
-          <p>{created_at.substring(0, 10)}</p>
+          <p>{newDate.toLocaleDateString()}</p>
         );
       }
     },
@@ -293,6 +303,7 @@ const Pedidos = ({ updateMigas }) => {
         <CardBody>
           <Table
             className="table-wiqli-antd"
+            rowSelection={rowSelection}
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={rows}

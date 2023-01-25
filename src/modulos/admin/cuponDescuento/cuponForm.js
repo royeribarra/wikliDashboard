@@ -11,32 +11,19 @@ import { updateMigas } from "../../../redux/actions/routeTiendaActions";
 import Page from '../../../components/Page';
 import {
   Card,
-  CardBody,
-  Button as ButtonReact
+  CardBody
 } from 'reactstrap';
 
 const { Option } = Select;
-const validateMessages = {
-  required: "${label} es requerido!",
-  types: {
-    email: "${label} no es un correo válido!",
-    number: "${label} no es válido!",
-  },
-  number: {
-    range: "${label} debe estar entre ${min} y ${max} carácteres!",
-  },
-};
 
 const CuponForm = ({ updateMigas }) => {
   const [form] = Form.useForm();
   const productoService = new ProductoService("wiqli/producto");
   const unidadService = new UnidadService("wiqli/unidades/todos");
   const categoriaService = new CategoriaService("wiqli/categorias/todos");
-  //const { id } = useParams();
   const params = useParams();
   const history = useHistory();
   const [actImage, setActImage] = useState("");
-  const [image, setImage] = useState(null);
   const [archivos, setArchivos] = useState([]);
   const [unidades, setUnidades] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -62,7 +49,6 @@ const CuponForm = ({ updateMigas }) => {
       "Content-Type": "multipart/form-data",
     };
     const formData = new FormData();
-    //formData.append("image", image);
     for (var key in values) {
       formData.append(key, values[key]);
     }
@@ -93,17 +79,7 @@ const CuponForm = ({ updateMigas }) => {
     }
   };
 
-  const onFileChange = (event) => {
-    const file = event.target.files[0];
-    let img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      setImage(file);
-      setActImage(URL.createObjectURL(file));
-    };
-  };
-
-  const { url, path } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   const normFile = (e) => {
     setArchivos(e.fileList);
@@ -140,7 +116,6 @@ const CuponForm = ({ updateMigas }) => {
             name="nest-messages"
             onFinish={onFinish}
             form={form}
-            validateMessages={validateMessages}
             layout="vertical"
           >
             <div className="caja-contenedor__body mt-2">

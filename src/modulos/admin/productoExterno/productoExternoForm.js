@@ -1,46 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useRouteMatch,  useHistory, useParams } from "react-router-dom";
-import { Form, Input, Upload, Button, Select } from "antd";
-import { UploadOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Select } from "antd";
 import { connect } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import { ProductoService } from "../../../servicios/productoService";
-import { UnidadService } from "../../../servicios/unidadService";
-import { CategoriaService } from "../../../servicios/categoriaService";
 import { updateMigas } from "../../../redux/actions/routeTiendaActions";
 import Page from '../../../components/Page';
 import {
   Card,
-  CardBody,
-  Button as ButtonReact
+  CardBody
 } from 'reactstrap';
 
 const { Option } = Select;
-const validateMessages = {
-  required: "${label} es requerido!",
-  types: {
-    email: "${label} no es un correo válido!",
-    number: "${label} no es válido!",
-  },
-  number: {
-    range: "${label} debe estar entre ${min} y ${max} carácteres!",
-  },
-};
 
 const ProductoExternoForm = ({ updateMigas }) => {
   const [form] = Form.useForm();
   const productoService = new ProductoService("wiqli/producto-scrapeado");
-  const unidadService = new UnidadService("wiqli/unidades/todos");
-  const categoriaService = new CategoriaService("wiqli/categorias/todos");
   const productoWiqliService = new ProductoService("wiqli/productos");
   //const { id } = useParams();
   const params = useParams();
   const history = useHistory();
-  const [actImage, setActImage] = useState("");
-  const [image, setImage] = useState(null);
-  const [archivos, setArchivos] = useState([]);
-  const [unidades, setUnidades] = useState([]);
-  const [categorias, setCategorias] = useState([]);
   const [productosWiqli, setProductosWiqli] = useState([]);
 
   const getProductoInfo = (id) => {
@@ -48,7 +27,6 @@ const ProductoExternoForm = ({ updateMigas }) => {
       ({ data }) => {
         data = { ...data, id };
         form.setFieldsValue(data);
-        setActImage(data.imagen);
       },
       (err) => {
       }
@@ -68,9 +46,6 @@ const ProductoExternoForm = ({ updateMigas }) => {
     for (var key in values) {
       formData.append(key, values[key]);
     }
-    archivos.forEach(file => {
-      formData.append('files[]', file.originFileObj);
-    });
     if(params.productoId){
       productoService.updateProduct(formData, params.productoId, header).then(
         ({data}) => {
@@ -95,26 +70,8 @@ const ProductoExternoForm = ({ updateMigas }) => {
     }
   };
 
-  const onFileChange = (event) => {
-    const file = event.target.files[0];
-    let img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      setImage(file);
-      setActImage(URL.createObjectURL(file));
-    };
-  };
+  const { url } = useRouteMatch();
 
-  const { url, path } = useRouteMatch();
-
-  const normFile = (e) => {
-    setArchivos(e.fileList);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-    
-  };
 
   useEffect(() => {
     updateMigas(url) 
@@ -128,12 +85,6 @@ const ProductoExternoForm = ({ updateMigas }) => {
     productoWiqliService.todosProductosParaScraping().then(({data})=> {
       setProductosWiqli(data);
     });
-    unidadService.getTodos().then(({data})=> {
-      setUnidades(data);
-    });
-    categoriaService.getTodos().then(({data})=> {
-      setCategorias(data);
-    });
   }, [])
   
   return (
@@ -145,7 +96,6 @@ const ProductoExternoForm = ({ updateMigas }) => {
             name="nest-messages"
             onFinish={onFinish}
             form={form}
-            validateMessages={validateMessages}
             layout="vertical"
           >
             <div className="caja-contenedor__body mt-2">

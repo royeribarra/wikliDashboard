@@ -54,7 +54,7 @@ const Buscar = ({form, handleParentSearch}) =>
                   <Option value="">Ninguno</Option>
                   {
                     categorias.map((categoria) => 
-                    <Option value={categoria.id}>{categoria.nombre}</Option>
+                    <Option key={categoria.id} value={categoria.id}>{categoria.nombre}</Option>
                     ) 
                   }
                 </Select>
