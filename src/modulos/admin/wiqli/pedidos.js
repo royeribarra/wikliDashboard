@@ -52,8 +52,9 @@ const Pedidos = ({ updateMigas }) => {
       dataIndex: "fecha_entrega",
       width: 120,
       render: (fecha_entrega) => {
+        let newDate = new Date(fecha_entrega);
         return (
-          <p>{fecha_entrega}</p>
+          <p>{newDate.toLocaleDateString()}</p>
         );
       }
     },
