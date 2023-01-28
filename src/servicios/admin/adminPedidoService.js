@@ -25,4 +25,9 @@ export class AdminPedidoService extends MainService {
   {
     return axios.get(`${this.url}/obtener-pagos/${id}`, this.options);
   }
+
+  enviarBoletasCliente(boletas)
+  {
+    return axios.post(`${this.url}s/enviar-boletas`, boletas, this.options);
+  }
 }

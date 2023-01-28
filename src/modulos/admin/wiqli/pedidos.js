@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
-import { Table, Form, Space, Popover, Button } from "antd";
+import { Table, Form } from "antd";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
-import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { toastr } from "react-redux-toastr";
 import Page from '../../../components/Page';
 import { FiEdit } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
+import "antd/dist/antd.css";
 
 import {
   Card,
@@ -24,16 +24,14 @@ const Pedidos = ({ updateMigas }) => {
   const adminPedidoService = new AdminPedidoService("admin/pedido");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedRowsArray, setSelectedRowKeys] = useState([]);
   
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+    selectedRowKeys: selectedRowsArray,
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRowKeys(selectedRowKeys);
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
   };
 
   let columns = [
@@ -185,6 +183,31 @@ const Pedidos = ({ updateMigas }) => {
       },
     },
     {
+      title: "Se envió boleta",
+      dataIndex: "",
+      width: 100,
+      render: (row) => {
+        const { id, boletaEnviada } = row;
+        return (
+          <Fragment>
+            {boletaEnviada > 0 ? (
+              <ButtonReactStrap
+                color="success"
+              >
+                SI
+              </ButtonReactStrap>
+            ) : (
+                <ButtonReactStrap
+                  color="danger"
+                >
+                  NO
+                </ButtonReactStrap>
+              )}
+          </Fragment>
+        );
+      },
+    },
+    {
       title: "Estado",
       dataIndex: "",
       width: 100,
@@ -294,12 +317,24 @@ const Pedidos = ({ updateMigas }) => {
     });
   }
 
+  const enviarBoletasPedidoSeleccionados = () => {
+    adminPedidoService.enviarBoletasCliente(selectedRowsArray).then(({data})=> {
+      console.log(data)
+    });
+    setSelectedRowKeys([]);
+  };
+
   return (
     <Page title="Pedidos">
       <Buscar form={form} handleParentSearch={fetchAll} exportExcel={exportExcel} />
       <Card style={{ marginTop: "15px" }}>
         <CardHeader>
-          Lista de Pedidos
+          <h5>  Lista de Pedidos </h5>
+          {
+            selectedRowsArray.length > 0 && 
+            <ButtonReactStrap onClick={enviarBoletasPedidoSeleccionados}>Enviar boletas de los pedidos seleccionados.</ButtonReactStrap>
+          }
+          
         </CardHeader>
         <CardBody>
           <Table
