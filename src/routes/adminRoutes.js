@@ -26,7 +26,7 @@ function AdminRoutes(){
   const { show } = state.loader;
   return (
     <Switch>
-      <Spin tip="Ahi vamos..." spinning={show}>
+      <Spin tip="Espere por favor..." spinning={show}>
       <MainLayout>
           <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
 

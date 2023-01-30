@@ -336,8 +336,9 @@ const Pedidos = ({ updateMigas }) => {
     try {
       dispatch(showLoader());
       adminPedidoService.enviarBoletasCliente(selectedRows).then(({data})=> {
-        toastr.success(data.message);
+        fetchAll(pagination.current);
         dispatch(showLoader(false));
+        toastr.success(data.message);
       });
     } catch (error) {
       toastr.error(error);
