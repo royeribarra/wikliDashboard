@@ -7,6 +7,7 @@ import {
 } from 'react-icons/md';
 
 class MainLayout extends React.Component {
+  
   static isSidebarOpen() {
     return document
       .querySelector('.cr-sidebar')
@@ -87,15 +88,17 @@ class MainLayout extends React.Component {
   render() {
     const { children } = this.props;
     return (
-      <main className="cr-app bg-light">
-        <Sidebar />
-        <Content fluid onClick={this.handleContentClick}>
-          <Header />
-          {children}
-          <Footer />
-        </Content>
-
-      </main>
+      
+        
+        <main className="cr-app bg-light">
+          <Sidebar />
+          <Content fluid onClick={this.handleContentClick}>
+            <Header />
+            {children}
+            <Footer />
+          </Content>
+        </main>
+      
     );
   }
 }

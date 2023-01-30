@@ -17,6 +17,10 @@ import {  AiFillSave } from "react-icons/ai";
 import { GiCancel} from "react-icons/gi";
 import { DetallePedidoService } from '../../../servicios/wiqli/detallePedidoService';
 import RegistroPago from './registroPago';
+import { useDispatch } from 'react-redux';
+import {
+  showLoader
+} from "../../../redux/actions/loaderActions";
 
 const { Option } = Select;
 
@@ -106,6 +110,7 @@ const EditableCell = ({
 };
 
 const PedidoDetalle = () => {
+  const dispatch = useDispatch();
   const pedidoService = new PedidoService("wiqli/pedido");
   const detallePedidoService = new DetallePedidoService("wiqli/detalle-pedido");
   const { pedidoId } = useParams();
@@ -148,11 +153,13 @@ const PedidoDetalle = () => {
 
   const save = async (detalle) => {
     try {
+      dispatch(showLoader());
       const row = await form.validateFields();
       pedidoService.updateDetalle(row, detalle.id).then(({data}) => {
         obtenerInformacionPedidoId();
         obtenerPedidoId();
         toastr.success(data.message)
+        dispatch(showLoader(false));
       });
       const newData = [...data];
       const index = newData.findIndex((item) => detalle.id === item.id);
@@ -168,17 +175,19 @@ const PedidoDetalle = () => {
         setEditingKey('');
       }
     } catch (errInfo) {
+      dispatch(showLoader(false));
       console.log('Validate Failed:', errInfo);
     }
   };
 
   const changeStatusPedido = (id) => {
+    dispatch(showLoader());
     pedidoService.updateStateDetalle(id).then(({data}) => {
       toastr.success(data.message);
-      pedidoService.get(pedidoId).then(
-        ({ data }) => {
+      pedidoService.get(pedidoId).then(({ data }) => {
           obtenerInformacionPedidoId();
           setData(data);
+          dispatch(showLoader(false));
         },
           (err) => {
         }
@@ -187,9 +196,11 @@ const PedidoDetalle = () => {
   }
 
   const eliminarDetallePedido = (id) => {
+    dispatch(showLoader());
     detallePedidoService.eliminarDetallePedido(id).then(({data})=> {
       obtenerInformacionPedidoId();
       obtenerPedidoId();
+      dispatch(showLoader(false));
     });
   };
 
@@ -329,9 +340,11 @@ const PedidoDetalle = () => {
   });
 
   const obtenerPedidoId = () => {
+    dispatch(showLoader());
     pedidoService.get(pedidoId).then(
       ({ data }) => {
         setData(data);
+        dispatch(showLoader(false));
       },
         (err) => {
       }
@@ -339,9 +352,11 @@ const PedidoDetalle = () => {
   }
 
   const obtenerInformacionPedidoId = () => {
+    dispatch(showLoader());
     pedidoService.getInformacionPedido(pedidoId).then(
       ({ data }) => {
         setDataPedido(data);
+        dispatch(showLoader(false));
       },
         (err) => {
       }

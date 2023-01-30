@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Table, Form } from "antd";
 import { updateMigas } from "../../../redux/actions/routeActions";
 import Buscar from "./buscar";
@@ -18,19 +18,25 @@ import {
 } from 'reactstrap';
 import { PedidoService } from "../../../servicios/wiqli/pedidoService";
 import { AdminPedidoService } from "../../../servicios/admin/adminPedidoService";
+import {
+  showLoader
+} from "../../../redux/actions/loaderActions";
 
 const Pedidos = ({ updateMigas }) => {
+  const dispatch = useDispatch();
   const pedidoService = new PedidoService("wiqli/pedidos");
   const adminPedidoService = new AdminPedidoService("admin/pedido");
   const { url, path } = useRouteMatch();
   const [form] = Form.useForm();
   const [selectedRowsArray, setSelectedRowKeys] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   
   const rowSelection = {
     selectedRowKeys: selectedRowsArray,
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys);
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      setSelectedRows(selectedRows);
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
 
@@ -258,6 +264,7 @@ const Pedidos = ({ updateMigas }) => {
   }, []);
 
   const fetchAll = (paginationTab = pagination) => {
+    dispatch(showLoader());
     const values = form.getFieldsValue();
     
     var fieldsValue = values;
@@ -280,47 +287,62 @@ const Pedidos = ({ updateMigas }) => {
         total: data.total,
       });
       setRows(data.data);
+      dispatch(showLoader(false));
     });
   };
 
   const exportExcel = () => {
+    dispatch(showLoader());
     const values = form.getFieldsValue();
     if(values.fecha){
       let fechaInicial = values.fecha[0].format('YYYY-MM-DD');
       let fechaFinal = values.fecha[1].format('YYYY-MM-DD');
       pedidoService.getExcel(fechaInicial, fechaFinal).then(({data}) => {
-        
+        dispatch(showLoader(false));
       })
     }
     if(!values.fecha){
       pedidoService.getExcelAll().then(({data}) => {
-        
+        dispatch(showLoader(false));
       })
     }
   }
 
   const changeStatusPedido = (id) => {
+    dispatch(showLoader());
     pedidoService.updateState(id).then(() => {
       fetchAll(pagination.current);
+      dispatch(showLoader(false));
     });
   }
 
   const pagarTotalPedido = (id) => {
+    dispatch(showLoader());
     adminPedidoService.pagarTotalPedido(id).then(() => {
       fetchAll(pagination.current);
+      dispatch(showLoader(false));
     });
   }
 
   const cancelarPagoPedido = (id) => {
+    dispatch(showLoader());
     adminPedidoService.cancelarPagoPedido(id).then(() => {
       fetchAll(pagination.current);
+      dispatch(showLoader(false));
     });
   }
 
   const enviarBoletasPedidoSeleccionados = () => {
-    adminPedidoService.enviarBoletasCliente(selectedRowsArray).then(({data})=> {
-      console.log(data)
-    });
+    try {
+      dispatch(showLoader());
+      adminPedidoService.enviarBoletasCliente(selectedRows).then(({data})=> {
+        toastr.success(data.message);
+        dispatch(showLoader(false));
+      });
+    } catch (error) {
+      toastr.error(error);
+      dispatch(showLoader(false));
+    }
     setSelectedRowKeys([]);
   };
 

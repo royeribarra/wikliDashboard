@@ -18,45 +18,48 @@ import estadisticaProducto from '../modulos/admin/productoExterno/estadisticaPro
 import cuponDescuento from '../modulos/admin/cuponDescuento/cuponDescuento';
 import cuponForm from '../modulos/admin/cuponDescuento/cuponForm';
 import precioComparativo from '../modulos/admin/precioComparativo/precioComparativo';
+import { Spin } from 'antd';
+import { useSelector } from "react-redux";
 
-class AdminRoutes extends React.Component{
-  render(){
-    return (
-      <Switch>
-        <MainLayout breakpoint={this.props.breakpoint}>
-          <React.Suspense fallback={<PageSpinner />}>
-            <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
+function AdminRoutes(){
+  const state = useSelector((state) => state);
+  const { show } = state.loader;
+  return (
+    <Switch>
+      <Spin tip="Ahi vamos..." spinning={show}>
+      <MainLayout>
+          <Route exact path={`/admin/configuracion`}                   component = { configuracion } />
 
-            <Route exact path={`/admin/usuarios`}                        component = { Usuarios } />
-            <Route exact path={`/admin/usuario/crear`}                   component = { UsuarioForm } />
-            <Route exact path={`/admin/usuarios/:usuarioId`}             component = { UsuarioForm } />
+          <Route exact path={`/admin/usuarios`}                        component = { Usuarios } />
+          <Route exact path={`/admin/usuario/crear`}                   component = { UsuarioForm } />
+          <Route exact path={`/admin/usuarios/:usuarioId`}             component = { UsuarioForm } />
 
-            <Route exact path={`/admin/pedidos-activos`}                 component = { pedidos } />
-            <Route exact path={`/admin/pedidos-incorrectos`}             component = { pedidosIncorrectos } />
-            <Route exact path={`/admin/pedido/:pedidoId`}                component = { pedidoDetalle } />
+          <Route exact path={`/admin/pedidos-activos`}                 component = { pedidos } />
+          <Route exact path={`/admin/pedidos-incorrectos`}             component = { pedidosIncorrectos } />
+          <Route exact path={`/admin/pedido/:pedidoId`}                component = { pedidoDetalle } />
 
-            <Route exact path={`/admin/productos`}                       component = { ProductosWiqli } />
-            <Route exact path={"/admin/producto/crear"}                  component = { ProductoForm } />
-            <Route exact path={"/admin/productos/:productoId"}           component = { ProductoForm } />
+          <Route exact path={`/admin/productos`}                       component = { ProductosWiqli } />
+          <Route exact path={"/admin/producto/crear"}                  component = { ProductoForm } />
+          <Route exact path={"/admin/productos/:productoId"}           component = { ProductoForm } />
 
-            <Route exact path={"/admin/precios-externos"}                component = { ProductoForm } />
-            <Route exact path={"/admin/precio-externo/:productoId"}      component = { ProductoForm } />
+          <Route exact path={"/admin/precios-externos"}                component = { ProductoForm } />
+          <Route exact path={"/admin/precio-externo/:productoId"}      component = { ProductoForm } />
 
-            <Route exact path={"/admin/scraping/productos-externos"}      component = { productoExterno } />
-            <Route exact path={"/admin/scraping/productos-externos/crear"}      component = { productoExternoForm } />
-            <Route exact path={"/admin/scraping/producto-externo/:productoId"}      component = { productoExternoForm } />
-            <Route exact path={"/admin/scraping/producto-externo/estadistica/:productoId"}      component = { estadisticaProducto } />
+          <Route exact path={"/admin/scraping/productos-externos"}      component = { productoExterno } />
+          <Route exact path={"/admin/scraping/productos-externos/crear"}      component = { productoExternoForm } />
+          <Route exact path={"/admin/scraping/producto-externo/:productoId"}      component = { productoExternoForm } />
+          <Route exact path={"/admin/scraping/producto-externo/estadistica/:productoId"}      component = { estadisticaProducto } />
 
-            <Route exact path={"/admin/cupones-descuento"}                component = { cuponDescuento } />
-            <Route exact path={`/admin/cupones-descuento/crear`}          component = { cuponForm } />
-            <Route exact path={"/admin/cupon-descuento/:cuponId"}         component = { cuponForm } />
+          <Route exact path={"/admin/cupones-descuento"}                component = { cuponDescuento } />
+          <Route exact path={`/admin/cupones-descuento/crear`}          component = { cuponForm } />
+          <Route exact path={"/admin/cupon-descuento/:cuponId"}         component = { cuponForm } />
 
-            <Route exact path={"/admin/comparacion-precios"}              component = { precioComparativo } />
-          </React.Suspense>
-        </MainLayout>
-      </Switch>
-    );
-  }
+          <Route exact path={"/admin/comparacion-precios"}              component = { precioComparativo } />
+        
+      </MainLayout>
+      </Spin>
+    </Switch>
+  );
 };
 
 export default AdminRoutes;
