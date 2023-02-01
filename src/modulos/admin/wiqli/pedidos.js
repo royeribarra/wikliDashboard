@@ -36,6 +36,7 @@ const Pedidos = ({ updateMigas }) => {
       title: "Orden",
       dataIndex: "id",
       width: 80,
+      sorter: (a, b) => a.id - b.id,
       render: (id) => {
         return (
           <p>{id}</p>
@@ -46,6 +47,12 @@ const Pedidos = ({ updateMigas }) => {
       title: "Fecha de entrega",
       dataIndex: "fecha_entrega",
       width: 120,
+      sorter: (a, b) => {
+        let A = new Date(a.fecha_entrega);
+        let B = new Date(b.fecha_entrega);
+        // a.fecha_entrega - b.fecha_entrega
+        return A-B;
+      },
       render: (fecha_entrega) => {
         let newDate = new Date(fecha_entrega);
         return (
@@ -57,6 +64,11 @@ const Pedidos = ({ updateMigas }) => {
       title: "Fecha de pedido",
       dataIndex: "created_at",
       width: 120,
+      sorter: (a, b) => {
+        let A = new Date(a.created_at);
+        let B = new Date(b.created_at);
+        return A-B;
+      },
       render: (created_at) => {
         let newDate = new Date(created_at);
         return (
