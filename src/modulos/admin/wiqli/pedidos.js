@@ -30,15 +30,6 @@ const Pedidos = ({ updateMigas }) => {
   const [form] = Form.useForm();
   const [selectedRowsArray, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-  
-  const rowSelection = {
-    selectedRowKeys: selectedRowsArray,
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRowKeys(selectedRowKeys);
-      setSelectedRows(selectedRows);
-      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-  };
 
   let columns = [
     {
@@ -332,6 +323,15 @@ const Pedidos = ({ updateMigas }) => {
     });
   }
 
+  const rowSelection = {
+    selectedRowKeys: selectedRowsArray,
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRowKeys(selectedRowKeys);
+      setSelectedRows(selectedRows);
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+  };
+
   const enviarBoletasPedidoSeleccionados = () => {
     try {
       dispatch(showLoader());
@@ -349,7 +349,12 @@ const Pedidos = ({ updateMigas }) => {
 
   return (
     <Page title="Pedidos">
-      <Buscar form={form} handleParentSearch={fetchAll} exportExcel={exportExcel} />
+      <Buscar 
+        form={form} 
+        handleParentSearch={fetchAll} 
+        exportExcel={exportExcel} 
+        selectedRowsKeys={selectedRowsArray}
+      />
       <Card style={{ marginTop: "15px" }}>
         <CardHeader>
           <h5>  Lista de Pedidos </h5>

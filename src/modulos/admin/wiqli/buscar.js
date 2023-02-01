@@ -10,10 +10,11 @@ import {
 import moment from 'moment';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const Buscar = ({form, handleParentSearch, exportExcel}) => 
+const Buscar = ({form, handleParentSearch, exportExcel, selectedRowsKeys=[]}) => 
 {
-
+  console.log(selectedRowsKeys)
   let [stateExcel, setStateExcel] = useState(false);
+  let [arrayPedidosSeleccionados, setArrayPedidosSeleccionados] = useState([]);
   let [fecha, setFecha] = useState({
     fechaInicial: null, fechaFinal: null
   });
@@ -42,6 +43,17 @@ const Buscar = ({form, handleParentSearch, exportExcel}) =>
       setStateExcel(false);
     }
   }
+
+  useEffect(()=>{
+    let array = "";
+    selectedRowsKeys.forEach((row)=>{
+      array = array+`pedidos[]=${row}&`
+    });
+    setArrayPedidosSeleccionados(array);
+    console.log(array);
+    const array1 = "pedidos[]=33&pedidos[]=34&pedidos[]=35";
+  }, [selectedRowsKeys]);
+  
 
   return (
     <Card className="filtro-gestiones">
@@ -78,7 +90,7 @@ const Buscar = ({form, handleParentSearch, exportExcel}) =>
           </div>
           {' '}
           <Button onClick={pasarInfo} style={{ marginRight: "10px" }}>Buscar</Button>
-          <Button color="success">
+          <Button color="success" style={{ marginRight: "10px" }}>
           {
             stateExcel ?  
             (<a 
@@ -94,6 +106,15 @@ const Buscar = ({form, handleParentSearch, exportExcel}) =>
               Ver Excel
             </a>
           }
+          </Button>
+          <Button color="info">
+            <a 
+              style={{ color: "white"}}
+              href = {`${process.env.REACT_APP_BASE_PATH}/wiqli/pedidos/exportar-excel?${arrayPedidosSeleccionados}`} 
+              target = "_blank"
+            >
+              Descargar Excel de Seleccionados
+            </a>
           </Button>
         </Form>
       </CardBody>
