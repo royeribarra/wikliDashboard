@@ -9,7 +9,6 @@ import Page from '../../../components/Page';
 import { FiEdit } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import "antd/dist/antd.css";
-
 import {
   Card,
   CardBody,
@@ -21,16 +20,9 @@ import { AdminPedidoService } from "../../../servicios/admin/adminPedidoService"
 import {
   showLoader
 } from "../../../redux/actions/loaderActions";
+import { asignarUrlDescarga } from "../../../redux/actions/pedidoActions";
 
 const Pedidos = ({ updateMigas }) => {
-  const dispatch = useDispatch();
-  const pedidoService = new PedidoService("wiqli/pedidos");
-  const adminPedidoService = new AdminPedidoService("admin/pedido");
-  const { url, path } = useRouteMatch();
-  const [form] = Form.useForm();
-  const [selectedRowsArray, setSelectedRowKeys] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-
   let columns = [
     {
       title: "Orden",
@@ -250,6 +242,14 @@ const Pedidos = ({ updateMigas }) => {
       },
     },
   ];
+
+  const dispatch = useDispatch();
+  const pedidoService = new PedidoService("wiqli/pedidos");
+  const adminPedidoService = new AdminPedidoService("admin/pedido");
+  const { url, path } = useRouteMatch();
+  const [form] = Form.useForm();
+  const [selectedRowsArray, setSelectedRowKeys] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [rows, setRows] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -294,23 +294,6 @@ const Pedidos = ({ updateMigas }) => {
     });
   };
 
-  const exportExcel = () => {
-    dispatch(showLoader());
-    const values = form.getFieldsValue();
-    if(values.fecha){
-      let fechaInicial = values.fecha[0].format('YYYY-MM-DD');
-      let fechaFinal = values.fecha[1].format('YYYY-MM-DD');
-      pedidoService.getExcel(fechaInicial, fechaFinal).then(({data}) => {
-        dispatch(showLoader(false));
-      })
-    }
-    if(!values.fecha){
-      pedidoService.getExcelAll().then(({data}) => {
-        dispatch(showLoader(false));
-      })
-    }
-  }
-
   const changeStatusPedido = (id) => {
     dispatch(showLoader());
     pedidoService.updateState(id).then(() => {
@@ -340,7 +323,13 @@ const Pedidos = ({ updateMigas }) => {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys);
       setSelectedRows(selectedRows);
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      clearForm();
+      if(selectedRowKeys.length>0){
+        dispatch(asignarUrlDescarga({tipo: 3, keys: selectedRowKeys}));
+      }else{
+        dispatch(asignarUrlDescarga({tipo: 1}));
+      }
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
 
@@ -359,13 +348,24 @@ const Pedidos = ({ updateMigas }) => {
     setSelectedRowKeys([]);
   };
 
+  const clearForm = () => {
+    form.setFieldsValue({
+      fecha: null
+    });
+  };
+
+  const clearSeleccionados = () =>{
+    setSelectedRowKeys([]);
+  };
+
   return (
     <Page title="Pedidos">
       <Buscar 
         form={form} 
-        handleParentSearch={fetchAll} 
-        exportExcel={exportExcel} 
+        handleParentSearch={fetchAll}
         selectedRowsKeys={selectedRowsArray}
+        clearSeleccionados={clearSeleccionados}
+        clearForm={clearForm}
       />
       <Card style={{ marginTop: "15px" }}>
         <CardHeader>

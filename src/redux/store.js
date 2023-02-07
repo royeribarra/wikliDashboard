@@ -9,6 +9,7 @@ import spinner from "./reducers/spinnerReducer";
 import userReducer from "./reducers/userReducer";
 import routeReducer from "./reducers/routeReducer";
 import { loaderReducer } from "./reducers/loaderReducer";
+import { pedidoReducer } from "./reducers/pedidoReducer";
 
 const reducer = combineReducers({   
     spinner,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     userReducer,
     routeReducer,
     toastr: toastrReducer,
-    loader: loaderReducer
+    loader: loaderReducer,
+    pedido: pedidoReducer
 });
 
 export default createStore(reducer, {},
