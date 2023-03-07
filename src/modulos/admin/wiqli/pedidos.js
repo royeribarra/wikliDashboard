@@ -46,7 +46,7 @@ const Pedidos = ({ updateMigas }) => {
         return A-B;
       },
       render: (fecha_entrega) => {
-        let newDate = new Date(fecha_entrega);
+        let newDate = new Date(fecha_entrega + "GMT-0500");
         return (
           <p>{newDate.toLocaleDateString()}</p>
         );
