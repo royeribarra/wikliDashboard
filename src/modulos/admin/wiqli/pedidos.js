@@ -42,7 +42,6 @@ const Pedidos = ({ updateMigas }) => {
       sorter: (a, b) => {
         let A = new Date(a.fecha_entrega);
         let B = new Date(b.fecha_entrega);
-        // a.fecha_entrega - b.fecha_entrega
         return A-B;
       },
       render: (fecha_entrega) => {
@@ -253,7 +252,7 @@ const Pedidos = ({ updateMigas }) => {
   const [rows, setRows] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 15,
+    pageSize: 10,
     total: 0,
   });
   const [loading] = useState(false);
@@ -267,6 +266,8 @@ const Pedidos = ({ updateMigas }) => {
   }, []);
 
   const fetchAll = (paginationTab = pagination) => {
+    console.log(selectedRows);
+    console.log(selectedRowsArray)
     dispatch(showLoader());
     const values = form.getFieldsValue();
     
@@ -319,10 +320,18 @@ const Pedidos = ({ updateMigas }) => {
   }
 
   const rowSelection = {
+    preserveSelectedRowKeys: true,
     selectedRowKeys: selectedRowsArray,
-    onChange: (selectedRowKeys, selectedRows) => {
+    onChange: (selectedRowKeys, selectedRow) => {
+      // console.log(selectedRowsArray)
+      // console.log(selectedRowKeys)
+      // console.log(selectedRow)
+      // const newRows = selectedRowKeys.filter(el => !selectedRowsArray.includes(el));
+      // const existeRow = selectedRowKeys.find(el => el === (newRows.length > 0 ? newRows[0] : ))
+      // console.log(newRows);
+      // setSelectedRowKeys(newRows.length > 0 ? [...selectedRowKeys, ...newRows] : [selectedRowKeys.filter((el)=> el === )]);
       setSelectedRowKeys(selectedRowKeys);
-      setSelectedRows(selectedRows);
+      setSelectedRows(selectedRow);
       clearForm();
       if(selectedRowKeys.length>0){
         dispatch(asignarUrlDescarga({tipo: 3, keys: selectedRowKeys}));
